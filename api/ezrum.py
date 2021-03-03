@@ -22,9 +22,8 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/register')
-@app.route('/register/<user_type>')
-def register(user_type='student'):
+@app.route('/register/<user_type>', endpoint='register')
+def register(user_type):
     if user_type == 'tutor':
         return 'Tutor registration page is under development.'
     elif user_type == 'student':

@@ -9,8 +9,8 @@
 <h1>Welcome To EZRUM!</h1>
 <p>The login page is currently under development. <br>
 Don't have an account?</p>
-<a href="{{ url_for('register') }}/tutor">Register as a tutor<a> <br>
-<a href="{{ url_for('register') }}/student">Register as student<a> <br>
+<a href="{{ url_for('register', user_type='tutor') }}">Register as a tutor<a> <br>
+<a href="{{ url_for('register', user_type='student') }}">Register as student<a> <br>
 
 </body>
 </html>
