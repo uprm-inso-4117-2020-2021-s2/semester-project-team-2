@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
 <body>
-
-<h1>Welcome To EZRUM!</h1>
-<p>The login page is currently under development. <br>
-Don't have an account?</p>
-<a href="{{ url_for('register', user_type='tutor') }}">Register as a tutor<a> <br>
-<a href="{{ url_for('register', user_type='student') }}">Register as student<a> <br>
-
+  <div class="login-page">
+    <div class="form">
+      <h1>EZRUM</h1>
+      <form id="id_login_form" class="login-form" method="post">
+        <input id="id_username" type="text" placeholder="username"/>
+        <input id="id_password" type="password" placeholder="password"/>
+        <input id="id_login" type="submit" value="Login" formmethod="post">
+        <p class="message">Not registered? <br>
+          <a id="id_tutor_register" href="{{ url_for('register', user_type='tutor') }}">Create a tutor account.</a> <br>
+          <a id="id_student_register" href="{{ url_for('register', user_type='student') }}">Create a student account.</a>
+        </p>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

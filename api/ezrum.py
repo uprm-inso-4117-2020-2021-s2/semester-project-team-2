@@ -17,7 +17,7 @@ def home(user_id=None):
     return 'Welcome user {}. Home page is currently under development.'.format(escape(user_id))
 
 
-@app.route('/login')
+@app.route('/login', methods=('GET', 'POST'))
 def login():
     return render_template('login.html')
 
