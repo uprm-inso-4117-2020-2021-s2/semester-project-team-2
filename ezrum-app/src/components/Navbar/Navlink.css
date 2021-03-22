@@ -1,0 +1,7 @@
+.nav-link-active {
+  color:  #117BB5 !important;
+}
+
+.nav-link-active svg path:nth-child(2) {
+  fill: #117BB5;
+}
