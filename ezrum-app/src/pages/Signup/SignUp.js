@@ -1,11 +1,12 @@
 import React from 'react'
+import './Signup.css'
 
-function SignUp() {
+function Signup() {
   return (
-    <div>
-
+    <div className='signup'>
+      Signup
     </div>
   )
 }
 
-export default SignUp
+export default Signup
