@@ -1,0 +1,8 @@
+.navbar {
+  background-color: #4BBA2D;
+  height: 70px;
+}
+
+.navbar-nav a .btn {
+  margin: 0 1em;
+}
