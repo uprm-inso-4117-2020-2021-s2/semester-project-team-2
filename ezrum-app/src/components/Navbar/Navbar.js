@@ -1,12 +1,12 @@
 import React from 'react'
 import Navlink from '../../components/Navbar/Navlink'
-import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
-import EzrumLogo from '../../assets/ezrum_logo_black.png'
-// import { ReactComponent as EzrumLogo } from '../../assets/ezrum_logo.svg'
+import { Navbar, Nav, Button } from 'react-bootstrap'
+import EzrumLogo from '../../assets/ezrum_logo_white.png'
+import './Navbar.css'
 
 
 
-function NabvarView() {
+function NabvarView({ handleUserType }) {
   return (
     <Navbar>
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -18,7 +18,9 @@ function NabvarView() {
         <Nav className='mr-5'>
           {/* <Navlink path="/scheduling">Scheduling</Navlink> */}
           <Navlink path='/signup'>
-            <Button variant='secondary'>Find Tutor</Button>
+            <Button onClick={() => handleUserType('tutoree')} variant='secondary'>
+              Find Tutor
+            </Button>
           </Navlink>
         </Nav>
       </Navbar.Collapse>

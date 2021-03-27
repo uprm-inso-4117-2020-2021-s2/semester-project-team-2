@@ -2,38 +2,36 @@ import React from 'react'
 import './Home.css'
 import EzrumBackgroundImg from '../../assets/ezrum_hero_background.jpeg'
 import { Button, Card } from 'react-bootstrap';
-import Navbar from '../../components/Navbar/Navbar'
 import Navlink from '../../components/Navbar/Navlink'
-import flexibilityIcon from '../../assets/SVG/flexibility.svg';
+// import flexibilityIcon from '../../assets/SVG/flexibility.svg';
 import EducationIcon from '../../assets/SVG/cast_for_education.svg';
 
 const boxInfo = [
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='1st icon' />,
     title: 'Virtuality'
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='2nd icon' />,
     title: 'Flexibility',
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='3rd icon' />,
     title: 'Simplicity',
   }
 ]
 
 
-function Home() {
+function Home({ handleUserType }) {
   return (
     <div className='home' style={{ height: window.innerHeight }}>
-      <Navbar />
       <div className='home__hero'>
         <img className='home__logo' src={EzrumBackgroundImg} alt='Background Hero Image' />
         <div className='home__left'>
           <div className='home__buumInfo'>
             {boxInfo.map(({ Icon, title }) =>
-              <div className='join__box' key={title}>
-                <div className='join__boxIcon'>
+              <div className='home__box' key={title}>
+                <div className='home__boxIcon'>
                   {Icon}
                 </div>
                 <p>
@@ -55,7 +53,7 @@ function Home() {
                 <Button>Sign In</Button>
               </Navlink>
               <Navlink path='/signup'>
-                <Button>Become a tutor</Button>
+                <Button onClick={() => handleUserType('tutor')}>Become a tutor</Button>
               </Navlink>
             </div>
           </Card>
