@@ -5,6 +5,7 @@ import { Button, Card } from 'react-bootstrap';
 import Navlink from '../../components/Navbar/Navlink'
 // import flexibilityIcon from '../../assets/SVG/flexibility.svg';
 import EducationIcon from '../../assets/SVG/cast_for_education.svg';
+import { navbarHeight } from '../../util/Util'
 
 const boxInfo = [
   {
@@ -24,8 +25,8 @@ const boxInfo = [
 
 function Home({ handleUserType }) {
   return (
-    <div className='home' style={{ height: window.innerHeight }}>
-      <div className='home__hero'>
+    <div className='home'>
+      <div className='home__hero' style={{ height: window.innerHeight - navbarHeight }}>
         <img className='home__logo' src={EzrumBackgroundImg} alt='Background Hero Image' />
         <div className='home__left'>
           <div className='home__buumInfo'>
