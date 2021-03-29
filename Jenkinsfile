@@ -11,6 +11,7 @@ pipeline {
                 script{
                     try{
                        sh """
+                       pwd
                        pipenv install
                        pipenv run pip3 list
                        pipenv run python3 -m pytest tests.py
