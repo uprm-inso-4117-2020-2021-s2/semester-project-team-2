@@ -7,6 +7,7 @@ pipeline {
                 sh """
                     cd api
                     pwd
+                    ls
                 """
                 sh "pwd"
                 sh "mkdir -p Drivers"
