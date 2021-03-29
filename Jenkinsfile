@@ -6,8 +6,8 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/selenium_setup']], extensions: [], userRemoteConfigs: [[credentialsId: 'Jenkins', url: 'git@github.com:uprm-inso-4117-2020-2021-s2/semester-project-team-2.git']]])
                 sh """
                 cd api
-                mkdir -p Drivers
-                yes | cp /usr/lib/chromium-browser/chromedriver Drivers/chromedriver
+                mkdir -p drivers
+                yes | cp /usr/lib/chromium-browser/chromedriver drivers/chromedriver
                 rm -rf */__pycache__
                 """
                 script{
@@ -15,7 +15,6 @@ pipeline {
                        sh """
                        cd api
                        pipenv install
-                       pipenv run pip3 list
                        pipenv run python3 -m pytest tests.py
                        """
                     } catch(e){
