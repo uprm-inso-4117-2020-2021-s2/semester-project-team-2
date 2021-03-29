@@ -4,7 +4,7 @@ from test_pom import LoginPage, RegisterPage
 def test_login(selenium_test):
     # Unpack selenium test and create login page pom instance
     driver, port, logger = selenium_test
-    login_page = LoginPage(driver, host='jenkins.ddnsking.com', port=port)
+    login_page = LoginPage(driver, port=port)
 
     # Test tutor register link works as expected
     login_page.visit()
