@@ -15,6 +15,7 @@ pipeline {
                        sh """
                        cd api
                        pipenv install
+		       pipenv run flask run --host 0.0.0.0
                        pipenv run python3 -m pytest tests.py
                        """
                     } catch(e){

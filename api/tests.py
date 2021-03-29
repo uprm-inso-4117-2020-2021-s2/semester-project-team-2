@@ -4,17 +4,17 @@ from test_pom import LoginPage, RegisterPage
 def test_login(selenium_test):
     # Unpack selenium test and create login page pom instance
     driver, port, logger = selenium_test
-    login_page = LoginPage(driver, port=port)
+    login_page = LoginPage(driver, host='0.0.0.0', port=port)
 
     # Test tutor register link works as expected
     login_page.visit()
-    tutor_register = RegisterPage(driver, user_type='tutor', port=port)
+    tutor_register = RegisterPage(driver, user_type='tutor', host='0.0.0.0', port=port)
     login_page.tutor_register.click()
     assert driver.current_url == tutor_register.page_url()
 
     # Test student register link works as expected
     login_page.visit()
-    student_register = RegisterPage(driver, user_type='student', port=port)
+    student_register = RegisterPage(driver, user_type='student', host='0.0.0.0', port=port)
     login_page.student_register.click()
     assert driver.current_url == student_register.page_url()
 
