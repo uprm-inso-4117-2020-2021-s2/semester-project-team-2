@@ -13,7 +13,7 @@ pipeline {
                        sh """
                        pipenv install
                        pipenv shell
-                       python -m pytest tests.py
+                       python3 -m pytest tests.py
                        """
                     } catch(e){
                         error("Tests Failed: ${e}")
