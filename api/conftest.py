@@ -32,7 +32,7 @@ def selenium_test():
 def live_server(selenium_test):
     env = os.environ.copy()
     env["FLASK_APP"] = "ezrum"
-    server = subprocess.Popen(['flask', 'run', '--port', str(selenium_test[1])], env=env)
+    server = subprocess.Popen(['flask', 'run', '-h', '0.0.0.0', '--port', str(selenium_test[1])], env=env)
     try:
         yield server
     finally:
