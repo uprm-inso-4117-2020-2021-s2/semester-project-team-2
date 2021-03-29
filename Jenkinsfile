@@ -12,6 +12,7 @@ pipeline {
                     try{
                        sh """
                        pipenv install
+                       pipenv run pip3 list
                        pipenv run python3 -m pytest tests.py
                        """
                     } catch(e){
