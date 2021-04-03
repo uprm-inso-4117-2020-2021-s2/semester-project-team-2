@@ -1,8 +1,9 @@
 import pytest
 import socket
-import subprocess
-import os
-
+import threading
+from wsgiref import simple_server
+from wsgiref.simple_server import WSGIRequestHandler
+from ezrum import app
 from selenium_driver_setup import SeleniumWebDriver
 
 
@@ -30,10 +31,12 @@ def selenium_test():
 # Used to launch a live server for testing
 @pytest.fixture(scope="session", autouse=True)
 def live_server(selenium_test):
-    env = os.environ.copy()
-    env["FLASK_APP"] = "ezrum"
-    server = subprocess.Popen(['flask', 'run', '--port', str(selenium_test[1])], env=env)
+    server = simple_server.WSGIServer(("", 5000), WSGIRequestHandler)
+    server.set_app(app)
+    pa_app = threading.Thread(target=server.serve_forever)
+    pa_app.start()
     try:
         yield server
     finally:
-        server.terminate()
+        server.shutdown()
+        pa_app.join()
