@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test Stage') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '${env.BRANCH_NAME}']], extensions: [], userRemoteConfigs: [[credentialsId: 'Jenkins', url: 'git@github.com:uprm-inso-4117-2020-2021-s2/semester-project-team-2.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: ${env.BRANCH_NAME}]], extensions: [], userRemoteConfigs: [[credentialsId: 'Jenkins', url: 'git@github.com:uprm-inso-4117-2020-2021-s2/semester-project-team-2.git']]])
                 sh """
                 cd api
                 mkdir -p drivers
