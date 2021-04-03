@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Test Stage') {
             steps {
+                sh "printenv"
                 checkout([$class: 'GitSCM', branches: [[name: "${env.CHANGE_BRANCH}"]], extensions: [], userRemoteConfigs: [[credentialsId: 'Jenkins', url: 'git@github.com:uprm-inso-4117-2020-2021-s2/semester-project-team-2.git']]])
                 sh """
                 cd api
