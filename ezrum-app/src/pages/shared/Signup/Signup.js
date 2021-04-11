@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './Signup.css'
-import Navbar from '../../components/Navbar/Navbar'
-import Navlink from '../../components/Navbar/Navlink'
+import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
 
 
@@ -58,13 +57,15 @@ function Signup({ userType }) {
             >
               <Form.Control type='password' placeholder='Confirm Password' />
             </Form.Group>
-            <Button
-              variant='primary'
-              type='submit'
-              className='w-100'
-            >
-              Submit
-            </Button>
+            <Navlink path='/signup/add-subject'>
+              <Button
+                variant='light'
+                type='submit'
+                className='w-100 green'
+              >
+                <span className='green h5'>Continue</span>
+              </Button>
+            </Navlink>
           </Form>
         </Card>
       </div>

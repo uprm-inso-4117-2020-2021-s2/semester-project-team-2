@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Home from './pages/Home/Home'
-import Signup from './pages/Signup/Signup'
-import Signin from './pages/Signin/Signin'
+import Home from './pages/shared/Home/Home'
+import Signup from './pages/shared/Signup/Signup'
+import Signin from './pages/shared/Signin/Signin'
 import Navbar from './components/Navbar/Navbar'
+import AddSubject from './pages/tutor/AddSubject/AddSubject'
+import TutorView from './pages/tutor/TutorView'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
@@ -20,8 +22,6 @@ function App() {
     setUserType(uType)
   }
 
-
-
   return (
     <div className='app'>
       <Router>
@@ -30,15 +30,26 @@ function App() {
           <Route exact path='/'>
             <Home handleUserType={handleUserType} />
           </Route>
-          <Route path={`/signup`}>
+
+          {/* sign up */}
+          <Route exact path={`/signup`}>
             <Signup userType={userType} />
           </Route>
+
+          {/* sign up - add subject */}
+          <Route path='/signup/add-subject'>
+            <AddSubject />
+          </Route>
+
+          {/* sign in */}
           <Route path='/signin'>
             <Signin />
           </Route>
-          {/* <Route path='/app' component={Layout} /> */}
-          {/* <Redirect from="/app" to="/app" /> */}
-          {/* <Route path='/app/:view' component={Layout} /> */}
+
+          {/* Tutor View */}
+          <Route exact path='/tutor/:view'>
+            <TutorView />
+          </Route>
 
           <Route>
             <h1>Page Not Found</h1>

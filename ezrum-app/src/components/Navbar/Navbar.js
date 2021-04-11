@@ -2,13 +2,14 @@ import React from 'react'
 import Navlink from '../../components/Navbar/Navlink'
 import { Navbar, Nav, Button } from 'react-bootstrap'
 import EzrumLogo from '../../assets/ezrum_logo_white.png'
+import { navbarHeight } from '../../util/Util'
 import './Navbar.css'
 
 
 
 function NabvarView({ handleUserType }) {
   return (
-    <Navbar>
+    <Navbar style={{ height: navbarHeight }}>
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto ml-5">
           <Navlink path='/'>
@@ -24,7 +25,7 @@ function NabvarView({ handleUserType }) {
           </Navlink>
         </Nav>
       </Navbar.Collapse>
-    </Navbar>
+    </Navbar >
   )
 }
 

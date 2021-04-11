@@ -1,9 +1,9 @@
-.signup {
-  height: 92vh;
+.addSubject {
+  height: 91vh;
   overflow: hidden !important;
 }
 
-.signup__centering {
+.addSubject__centering {
   display: flex;
   align-items: center;
   justify-content: center;

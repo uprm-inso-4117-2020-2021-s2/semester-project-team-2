@@ -1,10 +1,11 @@
 import React from 'react'
 import './Home.css'
-import EzrumBackgroundImg from '../../assets/ezrum_hero_background.jpeg'
+import EzrumBackgroundImg from '../../../assets/ezrum_hero_background.jpeg'
 import { Button, Card } from 'react-bootstrap';
-import Navlink from '../../components/Navbar/Navlink'
+import Navlink from '../../../components/Navbar/Navlink'
 // import flexibilityIcon from '../../assets/SVG/flexibility.svg';
-import EducationIcon from '../../assets/SVG/cast_for_education.svg';
+import EducationIcon from '../../../assets/SVG/cast_for_education.svg';
+import { navbarHeight } from '../../../util/Util'
 
 const boxInfo = [
   {
@@ -24,8 +25,8 @@ const boxInfo = [
 
 function Home({ handleUserType }) {
   return (
-    <div className='home' style={{ height: window.innerHeight }}>
-      <div className='home__hero'>
+    <div className='home'>
+      <div className='home__hero' style={{ height: window.innerHeight - navbarHeight }}>
         <img className='home__logo' src={EzrumBackgroundImg} alt='Background Hero Image' />
         <div className='home__left'>
           <div className='home__buumInfo'>
@@ -42,7 +43,7 @@ function Home({ handleUserType }) {
           </div>
         </div>
         <div className='home__right'>
-          <Card className='byIngredient__selectedIngredients p-3'>
+          <Card className='p-3'>
             <h2>Get Started</h2>
             <hr />
             <p>
