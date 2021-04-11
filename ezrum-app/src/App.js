@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './pages/Home/Home'
-import Signup from './pages/Signup/Signup'
+import Signup from './pages/Signup/SignUp'
 import Signin from './pages/Signin/Signin'
 import Navbar from './components/Navbar/Navbar'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -30,7 +30,7 @@ function App() {
           <Route exact path='/'>
             <Home handleUserType={handleUserType} />
           </Route>
-          <Route path={`/signup`}>
+          <Route path={`/signUp`}>
             <Signup userType={userType} />
           </Route>
           <Route path='/signin'>

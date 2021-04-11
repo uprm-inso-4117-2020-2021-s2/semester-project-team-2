@@ -6,7 +6,7 @@
 .home__hero {
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.6);
   height: 100vh;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,26 +21,110 @@
 }
 
 .home__left {
-  color: white;
+  width: 40%;
+  height: 100%;
+}
+
+.home__right {
+  width: 60%;
+  height: 100%;
+}
+
+form {
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  height: 50%;
+  margin: 25% 40% 25% 0%;
+  text-align: center;
 }
 
 .home__buumInfo {
-  width: 50%;
-  padding-left: 4em;
-  margin-top: 4em;
+  height: 50%;
+  margin: 30% 0% 50% 50%;
 }
 
-.home__buumInfo .home__box  {
-  position: relative;
-  padding: 25px 0;
+.getStartedArea{
+  background-color: white;
+  border-radius: 50px;
+  height: 20%;
+  width: 50%;
+  margin: 0% 0% 0% 25%;
+  padding-top: 3%;
+}
+
+.getStartedTitle{
+  font-weight: bold;
+  font-size: xx-large;
+  color: #4BBA2D;
+}
+
+.formBody{
+  margin: 0% 5% 0% 5%;
+  font-size: xx-large;
+}
+
+.d-flex {
+  margin: 5% 0% 0% 0%;
+}
+
+.signInArea{
+  width: 40%;
+  text-align: center;
+}
+
+.becomeTutorArea{
+  width: 60%;
+  text-align: center;
+}
+
+.signInButt{
+  background-color: white;
+  color: #4BBA2D;
+  width: 60%;
+  height: 60px;
+  margin-left: 15%;
+  border: none;
+  border-radius: 50px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.becomeTutorButt{
+  background-color: #4BBA2D;
+  width: 85%;
+  height: 60px;
+  border: none;
+  margin-right: 15%;
+  border-radius: 50px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.signInButt:hover{
+  background-color: #4BBA2D;
+  color: green;
+}
+.becomeTutorButt:hover {
+  background-color: green;
+}
+
+.homeBoxTitles{
+  margin: auto auto auto 5%;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.home__box{
+  margin: 25% 0% 25% 0%;
+  vertical-align: middle;
+  color: white;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .home__box .home__boxIcon {
-  min-width: 64px;
-  height: 64px;
+  min-width: 100px;
+  height: 100px;
   background: #fff;
   display: flex;
   justify-content: center;
@@ -48,5 +132,4 @@
   border-radius: 50%;
   font-size: 25px;
   color: #555;
-  box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
 }
