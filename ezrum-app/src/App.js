@@ -10,12 +10,6 @@ import TutorView from './pages/tutor/TutorView'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
-// const navbarLinks = {
-//   default: {
-//     findTutor: ,
-//   }
-// }
-
 /**
  * 
  * Follow the BEM convention with the css class names to avoid css issues
@@ -23,15 +17,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
  */
 function App() {
   const [userType, setUserType] = useState()
-  // const [links, setLinks] = useState()
   const handleUserType = (uType) => {
     console.log(uType)
     setUserType(uType)
   }
-
-  console.log('app')
-
-
 
   return (
     <div className='app'>
