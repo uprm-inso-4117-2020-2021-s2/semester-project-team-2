@@ -1,11 +1,11 @@
 import React from 'react'
 import './Home.css'
-import EzrumBackgroundImg from '../../assets/ezrum_hero_background.jpeg'
+import EzrumBackgroundImg from '../../../assets/ezrum_hero_background.jpeg'
 import { Button, Card } from 'react-bootstrap';
-import Navlink from '../../components/Navbar/Navlink'
+import Navlink from '../../../components/Navbar/Navlink'
 // import flexibilityIcon from '../../assets/SVG/flexibility.svg';
-import EducationIcon from '../../assets/SVG/cast_for_education.svg';
-import { navbarHeight } from '../../util/Util'
+import EducationIcon from '../../../assets/SVG/cast_for_education.svg';
+import { navbarHeight } from '../../../util/Util'
 
 const boxInfo = [
   {
@@ -43,7 +43,7 @@ function Home({ handleUserType }) {
           </div>
         </div>
         <div className='home__right'>
-          <Card className='byIngredient__selectedIngredients p-3'>
+          <Card className='p-3'>
             <h2>Get Started</h2>
             <hr />
             <p>
