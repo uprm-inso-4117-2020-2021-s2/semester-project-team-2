@@ -58,13 +58,34 @@ function Signup({ userType }) {
               <Form.Control type='password' placeholder='Confirm Password' />
             </Form.Group>
             <Navlink path='/signup/add-subject'>
-              <Button
-                variant='light'
-                type='submit'
-                className='w-100 green'
-              >
-                <span className='green h5'>Continue</span>
-              </Button>
+              {
+                userType === 'tutor'
+                  ?
+                  <Button
+                    variant='light'
+                    type='submit'
+                    className='w-100 green'
+                  >
+                    <span className='green h5'>Continue</span>
+                  </Button>
+                  :
+                  <div className='d-flex justify-content-center align-content-center'>
+                    <div className='w-100 mr-2'>
+                      <Navlink path={`/`}>
+                        <Button variant='light' type='submit' className='w-100'>
+                          <span className='green'>Cancel</span>
+                        </Button>
+                      </Navlink>
+                    </div>
+                    <div className='w-100'>
+                      <Navlink path={`/tutoree/find-tutor`}>
+                        <Button variant='primary' type='submit' className='w-100'>
+                          Sign Up
+                        </Button>
+                      </Navlink>
+                    </div>
+                  </div>
+              }
             </Navlink>
           </Form>
         </Card>
