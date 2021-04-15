@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './AddSubject.css'
 import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
-import Subjects from '../Subjects/Subjects'
 
 function AddSubject() {
   const [subject, setSubject] = useState('');

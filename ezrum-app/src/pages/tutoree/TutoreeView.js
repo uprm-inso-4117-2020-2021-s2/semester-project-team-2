@@ -18,7 +18,7 @@ function TutoreeView() {
         return <FindTutor />
       case tutoreeViews.profile:
         return <Profile />
-      case tutoreeViews.schedule:
+      default:
         return <Schedule />
     }
   }

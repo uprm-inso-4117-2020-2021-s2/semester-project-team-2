@@ -9,15 +9,15 @@ import { navbarHeight } from '../../../util/Util'
 
 const boxInfo = [
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='1st icon' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='1st iconsss asjjfh;d sdf d' />,
     title: 'Virtuality'
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='2nd icon' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='2nd icon asofhasjdfnal fdj fjlksdanf' />,
     title: 'Flexibility',
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='3rd icon' />,
+    Icon: <img height='35' width='35' src={EducationIcon} alt='3rd icon laksjdfn asojf naps df' />,
     title: 'Simplicity',
   }
 ]
@@ -27,7 +27,7 @@ function Home({ handleUserType }) {
   return (
     <div className='home'>
       <div className='home__hero' style={{ height: window.innerHeight - navbarHeight }}>
-        <img className='home__logo' src={EzrumBackgroundImg} alt='Background Hero Image' />
+        <img className='home__logo' src={EzrumBackgroundImg} alt='Background Hero' />
         <div className='home__left'>
           <div className='home__buumInfo'>
             {boxInfo.map(({ Icon, title }) =>
