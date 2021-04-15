@@ -1,14 +1,12 @@
 import React from 'react'
 import { useRouteMatch } from 'react-router-dom'
-import { tutorViews } from '../../util/ContentViews'
+import { tutoreeViews } from '../../util/ContentViews'
 import { urlSlug } from '../../util/Util'
-import Requests from '../../pages/tutor/Requests/Requests'
-import Subjects from './Subjects/Subjects'
+import FindTutor from '../../pages/tutoree/FindTutor/FindTutor'
 import Profile from '../../pages/shared/Profile/Profile'
 import Schedule from '../../pages/shared/Schedule/Schedule'
 
-/** Handles the components to be displayed by recognizing route changes. */
-function TutorView() {
+function TutoreeView() {
   let { url } = useRouteMatch();
 
   /** returns the component to be displayed.
@@ -16,13 +14,11 @@ function TutorView() {
     */
   const handleView = (view) => {
     switch (view) {
-      case tutorViews.subjects:
-        return <Subjects />
-      case tutorViews.requests:
-        return <Requests />
-      case tutorViews.profile:
+      case tutoreeViews.findTutor:
+        return <FindTutor />
+      case tutoreeViews.profile:
         return <Profile />
-      case tutorViews.schedule:
+      case tutoreeViews.schedule:
         return <Schedule />
     }
   }
@@ -34,4 +30,4 @@ function TutorView() {
   )
 }
 
-export default TutorView
+export default TutoreeView

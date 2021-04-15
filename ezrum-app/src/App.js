@@ -7,6 +7,7 @@ import Signin from './pages/shared/Signin/Signin'
 import Navbar from './components/Navbar/Navbar'
 import AddSubject from './pages/tutor/AddSubject/AddSubject'
 import TutorView from './pages/tutor/TutorView'
+import TutoreeView from './pages/tutoree/TutoreeView'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 
@@ -31,17 +32,17 @@ function App() {
             <Home handleUserType={handleUserType} />
           </Route>
 
-          {/* sign up */}
+          {/* Sign up */}
           <Route exact path={`/signup`}>
             <Signup userType={userType} />
           </Route>
 
-          {/* sign up - add subject */}
+          {/* Sign up - add subject */}
           <Route path='/signup/add-subject'>
             <AddSubject />
           </Route>
 
-          {/* sign in */}
+          {/* Sign in */}
           <Route path='/signin'>
             <Signin />
           </Route>
@@ -49,6 +50,11 @@ function App() {
           {/* Tutor View */}
           <Route exact path='/tutor/:view'>
             <TutorView />
+          </Route>
+
+          {/* Tutoree View */}
+          <Route exact path='/tutoree/:view'>
+            <TutoreeView />
           </Route>
 
           <Route>
