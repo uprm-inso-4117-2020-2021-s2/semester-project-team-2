@@ -23,11 +23,7 @@ function Signup({ userType }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password)
-  }
-
-  const displayHeader = () => {
-
+    console.log(email, password, confirmPassword)
   }
 
   return (
@@ -40,27 +36,27 @@ function Signup({ userType }) {
           <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
           <Form onSubmit={handleSubmit}>
             <Form.Group
-              controlId='formBasicEmail'
+              controlId='email'
               onChange={handleEmailChange}
             >
               <Form.Control type='email' placeholder='Email' />
             </Form.Group>
             <Form.Group
-              controlId='formBasicPassword'
+              controlId='password'
               onChange={handlePasswordChange}
             >
               <Form.Control type='password' placeholder='Password' />
             </Form.Group>
             <Form.Group
-              controlId='formBasicPassword'
+              controlId='confirmPassword'
               onChange={handleConfirmPasswordChange}
             >
               <Form.Control type='password' placeholder='Confirm Password' />
             </Form.Group>
-            <Navlink path='/signup/add-subject'>
-              {
-                userType === 'tutor'
-                  ?
+            {
+              userType === 'tutor'
+                ?
+                <Navlink path='/signup/add-subject'>
                   <Button
                     variant='light'
                     type='submit'
@@ -68,25 +64,25 @@ function Signup({ userType }) {
                   >
                     <span className='green h5'>Continue</span>
                   </Button>
-                  :
-                  <div className='d-flex justify-content-center align-content-center'>
-                    <div className='w-100 mr-2'>
-                      <Navlink path={`/`}>
-                        <Button variant='light' type='submit' className='w-100'>
-                          <span className='green'>Cancel</span>
-                        </Button>
-                      </Navlink>
-                    </div>
-                    <div className='w-100'>
-                      <Navlink path={`/tutoree/find-tutor`}>
-                        <Button variant='primary' type='submit' className='w-100'>
-                          Sign Up
-                        </Button>
-                      </Navlink>
-                    </div>
+                </Navlink>
+                :
+                <div className='d-flex justify-content-center align-content-center'>
+                  <div className='w-100 mr-2'>
+                    <Navlink path={`/`}>
+                      <Button variant='light' type='submit' className='w-100'>
+                        <span className='green'>Cancel</span>
+                      </Button>
+                    </Navlink>
                   </div>
-              }
-            </Navlink>
+                  <div className='w-100'>
+                    <Navlink path={`/tutoree/find-tutor`}>
+                      <Button variant='primary' type='submit' className='w-100'>
+                        Sign Up
+                        </Button>
+                    </Navlink>
+                  </div>
+                </div>
+            }
           </Form>
         </Card>
       </div>

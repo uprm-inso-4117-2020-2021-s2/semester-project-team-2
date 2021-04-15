@@ -22,7 +22,7 @@ function TutorView() {
         return <Requests />
       case tutorViews.profile:
         return <Profile />
-      case tutorViews.schedule:
+      default:
         return <Schedule />
     }
   }
