@@ -3,8 +3,8 @@ import './Schedule.css'
 
 function Schedule() {
   return (
-    <div>
-
+    <div className='schedule'>
+      <h1>SCHEDULE COMPONENT</h1>
     </div>
   )
 }
