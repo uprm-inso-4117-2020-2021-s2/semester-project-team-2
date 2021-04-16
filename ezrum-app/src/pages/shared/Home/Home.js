@@ -3,22 +3,22 @@ import './Home.css'
 import EzrumBackgroundImg from '../../../assets/ezrum_hero_background.jpeg'
 import { Button, Card } from 'react-bootstrap';
 import Navlink from '../../../components/Navbar/Navlink'
-// import flexibilityIcon from '../../assets/SVG/flexibility.svg';
-import EducationIcon from '../../../assets/SVG/cast_for_education.svg';
+import FlexibilityIcon from '../../../assets/Flexibility.png';
+import EducationIcon from '../../../assets/Virtuality.png';
+import SimplicityIcon from '../../../assets/Simplicity.png';
 import { navbarHeight } from '../../../util/Util'
-import { useStateValue } from '../../../context/Provider';
 
 const boxInfo = [
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='1st iconsss asjjfh;d sdf d' />,
+    Icon: <img height='40' width='40' src={EducationIcon} alt='1st icon' />,
     title: 'Virtuality'
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='2nd icon asofhasjdfnal fdj fjlksdanf' />,
+    Icon: <img height='40' width='40' src={FlexibilityIcon} alt='2nd icon' />,
     title: 'Flexibility',
   },
   {
-    Icon: <img height='35' width='35' src={EducationIcon} alt='3rd icon laksjdfn asojf naps df' />,
+    Icon: <img height='40' width='40' src={SimplicityIcon} alt='3rd icon' />,
     title: 'Simplicity',
   }
 ]
@@ -36,7 +36,7 @@ function Home() {
                 <div className='home__boxIcon'>
                   {Icon}
                 </div>
-                <p>
+                <p className='homeBoxTitles'>
                   {title}
                 </p>
               </div>
@@ -44,21 +44,35 @@ function Home() {
           </div>
         </div>
         <div className='home__right'>
-          <Card className='p-3'>
-            <h2>Get Started</h2>
+          <form className='p-4'>
+            <h2 className='getStartedTitle'>
+              Get Started!
+              </h2>
             <hr />
-            <p>
-              Take less time looking for someone and more time learning.
-            </p>
-            <div className='d-flex'>
-              <Navlink path='/signin'>
-                <Button>Sign In</Button>
-              </Navlink>
-              <Navlink path='/signup'>
-                <Button>Become a tutor</Button>
-              </Navlink>
+            <div>
+              <p className='formBody'>
+                Take less time looking for someone and more time learning.
+              </p>
             </div>
-          </Card>
+            <div className='d-flex'>
+              <div className='signInArea mr-4'>
+                <Navlink path='/signin'>
+                  <Button className='signInBtn w-100' variant='light'>
+                    <span>
+                      Sign In
+                    </span>
+                  </Button>
+                </Navlink>
+              </div>
+              <div className='becomeTutorArea'>
+                <Navlink path='/signup'>
+                  <Button className='becomeTutorButt w-100' variant='primary'>
+                    Become a Tutor
+                  </Button>
+                </Navlink>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
