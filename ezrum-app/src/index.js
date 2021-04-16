@@ -5,7 +5,6 @@ import App from './App';
 import './custom.scss';
 import { GlobalProvider } from '../src/context/Provider';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <GlobalProvider>
