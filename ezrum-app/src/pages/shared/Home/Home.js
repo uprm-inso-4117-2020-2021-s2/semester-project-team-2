@@ -44,7 +44,7 @@ function Home() {
           </div>
         </div>
         <div className='home__right'>
-          <form className='p-4'>
+          <form className='home__form p-4'>
             <h2 className='getStartedTitle'>
               Get Started!
               </h2>
