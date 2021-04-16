@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from './pages/shared/Home/Home'
@@ -8,7 +8,9 @@ import Navbar from './components/Navbar/Navbar'
 import AddSubject from './pages/tutor/AddSubject/AddSubject'
 import TutorView from './pages/tutor/TutorView'
 import TutoreeView from './pages/tutoree/TutoreeView'
+import { useStateValue } from './context/Provider'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { GlobalProvider } from './context/Provider'
 
 
 /**
@@ -17,24 +19,18 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
  * 
  */
 function App() {
-  const [userType, setUserType] = useState()
-  const handleUserType = (uType) => {
-    console.log(uType)
-    setUserType(uType)
-  }
-
   return (
     <div className='app'>
       <Router>
-        <Navbar handleUserType={handleUserType} />
+        <Navbar />
         <Switch>
           <Route exact path='/'>
-            <Home handleUserType={handleUserType} />
+            <Home />
           </Route>
 
           {/* Sign up */}
           <Route exact path={`/signup`}>
-            <Signup userType={userType} />
+            <Signup />
           </Route>
 
           {/* Sign up - add subject */}
@@ -62,7 +58,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </div >
+    </div>
   );
 }
 
