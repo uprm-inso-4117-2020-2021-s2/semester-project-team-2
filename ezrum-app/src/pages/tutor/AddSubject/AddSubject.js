@@ -2,11 +2,19 @@ import React, { useState } from 'react'
 import './AddSubject.css'
 import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
+import { useStateValue } from '../../../context/Provider'
+import { useHistory } from "react-router-dom";
 
 function AddSubject() {
-  const [subject, setSubject] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('')
+  // const [subject, setSubject] = useState('');
+  // const [price, setPrice] = useState('');
+  // const [description, setDescription] = useState('');
+  const [subject, setSubject] = useState('Calculo 1');
+  const [price, setPrice] = useState(20.00);
+  const [description, setDescription] = useState('DESCRIPTION');
+  const { authDispatch, tutorState, tutorDispatch } = useStateValue();
+  const history = useHistory()
+  console.log('AddSubject tutorState', tutorState)
 
   const handleSubjectChange = e => {
     setSubject(e.target.value);
@@ -20,8 +28,25 @@ function AddSubject() {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const onCancel = (e) => {
+    e.preventDefault()
+    authDispatch({ type: 'REMOVE_USER' })
+    history.goBack()
+  }
+
+  const onSignup = (e) => {
     e.preventDefault();
+    const subjects = {
+      subject: subject,
+      price: price,
+      description: description
+    }
+    // console.log(subjects.subject, subjects.price, subjects.description)
+    tutorDispatch({
+      type: 'ADD_SUBJECT',
+      subjects: subjects
+    })
+    history.push('/tutor/subjects')
   }
 
 
@@ -31,7 +56,7 @@ function AddSubject() {
         <Card className='p-4'>
           <h4>Add Subject of Expertise</h4>
           <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Form.Group
               controlId='formBasicEmail'
               onChange={handleSubjectChange}
@@ -52,18 +77,14 @@ function AddSubject() {
             </Form.Group>
             <div className='d-flex justify-content-center align-content-center'>
               <div className='w-100 mr-2'>
-                <Navlink path={`/signup`}>
-                  <Button variant='light' type='submit' className='w-100'>
-                    <span className='green'>Cancel</span>
-                  </Button>
-                </Navlink>
+                <Button variant='light' type='submit' className='w-100' onClick={onCancel}>
+                  <span className='green'>Cancel</span>
+                </Button>
               </div>
               <div className='w-100'>
-                <Navlink path={`/tutor/subjects`}>
-                  <Button variant='primary' type='submit' className='w-100'>
-                    Sign Up
-                  </Button>
-                </Navlink>
+                <Button variant='primary' type='submit' className='w-100' onClick={onSignup}>
+                  Sign Up
+                </Button>
               </div>
             </div>
           </Form>

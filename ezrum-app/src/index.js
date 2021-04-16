@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-//import './custom.scss';
-
+import './custom.scss';
+import { GlobalProvider } from '../src/context/Provider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalProvider>
+      <App />
+    </GlobalProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

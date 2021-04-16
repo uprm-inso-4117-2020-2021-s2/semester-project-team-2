@@ -6,6 +6,7 @@ import Navlink from '../../../components/Navbar/Navlink'
 // import flexibilityIcon from '../../assets/SVG/flexibility.svg';
 import EducationIcon from '../../../assets/SVG/cast_for_education.svg';
 import { navbarHeight } from '../../../util/Util'
+import { useStateValue } from '../../../context/Provider';
 
 const boxInfo = [
   {
@@ -23,7 +24,7 @@ const boxInfo = [
 ]
 
 
-function Home({ handleUserType }) {
+function Home() {
   return (
     <div className='home'>
       <div className='home__hero' style={{ height: window.innerHeight - navbarHeight }}>
@@ -54,7 +55,7 @@ function Home({ handleUserType }) {
                 <Button>Sign In</Button>
               </Navlink>
               <Navlink path='/signup'>
-                <Button onClick={() => handleUserType('tutor')}>Become a tutor</Button>
+                <Button>Become a tutor</Button>
               </Navlink>
             </div>
           </Card>
