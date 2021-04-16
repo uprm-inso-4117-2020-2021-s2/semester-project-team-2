@@ -5,3 +5,7 @@
 .navbar-nav a .btn {
   margin: 0 1em;
 }
+
+a:hover {
+  font-size: 17px
+}
