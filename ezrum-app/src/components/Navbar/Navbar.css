@@ -6,6 +6,9 @@
   margin: 0 1em;
 }
 
+a {
+  color: white !important
+}
 a:hover {
   font-size: 17px
 }
