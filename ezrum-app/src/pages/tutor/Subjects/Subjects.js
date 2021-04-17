@@ -16,7 +16,8 @@ const subjects = [
 function Subjects() {
   return (
     <div className='subjects'>
-      <h1>SUBJECTS</h1>
+      <h2>MY SUBJECTS</h2>
+      <hr className='m-0' />
     </div>
   )
 }
