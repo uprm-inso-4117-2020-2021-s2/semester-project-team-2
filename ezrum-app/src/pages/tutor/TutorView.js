@@ -1,4 +1,5 @@
 import React from 'react'
+import './TutorView.css'
 import { useRouteMatch } from 'react-router-dom'
 import { tutorViews } from '../../util/ContentViews'
 import { urlSlug } from '../../util/Util'
@@ -28,7 +29,7 @@ function TutorView() {
   }
 
   return (
-    <div>
+    <div className='tutorView'>
       {handleView(urlSlug(url))}
     </div>
   )
