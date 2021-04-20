@@ -45,20 +45,6 @@ class BaseUsers:
         }
         return result
 
-    def build_user_map_dict(self, row):
-        result = {
-            'user_id': row[0],
-            'first_name': row[1],
-            'last_name': row[2],
-            'email': row[3],
-            'password': row[4],
-            'college': row[5],
-            'phone_number': row[6],
-            'about_me': row[7],
-            'user_type': row[8]
-        }
-        return result
-
     def build_tutor_map_dict(self, row):
         result = {
             'tutor_id': row[0],
@@ -76,7 +62,6 @@ class BaseUsers:
 
     def authenticate_user(self, email, password):
         dao = UsersDAO()
-        # user_id = dao.create_user(first_name, last_name, email, password, user_type)
         user_id = dao.authenticate_user(email, password)
         message = {}
         if user_id:
