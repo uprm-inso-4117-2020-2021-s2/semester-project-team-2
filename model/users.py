@@ -1,5 +1,3 @@
-from flask import jsonify
-
 from config.dbconfig import pg_config
 import psycopg2
 
@@ -7,12 +5,15 @@ import psycopg2
 #     user_id serial primary key,
 #     first_name varchar(20),
 #     last_name varchar(30),
-#     password varchar(30),
-#     email varchar(30)
+#     email varchar(30) unique,
+#     password varchar(120),
+#     college varchar(90),
+#     phone_number varchar(14),
+#     about_me varchar(400),
+#     user_type varchar(10)
 # );
 
-
-class UsersDAO:
+class UserDAO:
     def __init__(self):
 
         connection_url = "dbname=%s user=%s password=%s port=%s host=%s" % (pg_config['dbname'], pg_config['user'],
@@ -20,11 +21,15 @@ class UsersDAO:
         print("conection url:  ", connection_url)
         self.conn = psycopg2.connect(connection_url)
 
-    def create_user(self, first_name, last_name, email, password):
+    def create_user(self, first_name, last_name, email, password, user_type):
         cursor = self.conn.cursor()
-        query = "insert into users (first_name, last_name, password, email) values(%s, %s, %s, %s) returning user_id;"
-        cursor.execute(query, (first_name, last_name, password, email))
+        query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
+                "values (%s, %s, %s, %s, %s, %s, %s, %s) returning user_id as id) insert into tutor (user_id) " \
+                "select id from new_user returning user_id;"
+
+        cursor.execute(query, (first_name, last_name, email, password, None, None, None, user_type,))
         user_id = cursor.fetchone()[0]
+        print(user_id)
         self.conn.commit()
         return user_id
 
