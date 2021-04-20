@@ -65,7 +65,7 @@ function Home() {
                 </Navlink>
               </div>
               <div className='becomeTutorArea'>
-                <Navlink path='/signup'>
+                <Navlink path='/signup/tutor'>
                   <Button className='becomeTutorButt w-100' variant='primary'>
                     Become a Tutor
                   </Button>

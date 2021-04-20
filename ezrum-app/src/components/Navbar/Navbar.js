@@ -45,7 +45,7 @@ function NabvarView() {
                 </div>
               </div>
               :
-              <Navlink path='/signup'>
+              <Navlink path='/signup/tutoree'>
                 <Button variant='secondary'>
                   Find Tutor
                 </Button>
