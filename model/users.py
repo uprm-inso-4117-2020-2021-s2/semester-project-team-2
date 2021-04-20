@@ -13,6 +13,7 @@ import psycopg2
 #     user_type varchar(10)
 # );
 
+
 class UsersDAO:
     def __init__(self):
 
@@ -27,7 +28,8 @@ class UsersDAO:
                 "values (%s, %s, %s, %s, %s, %s, %s, %s) returning user_id as id) insert into tutor (user_id) " \
                 "select id from new_user returning user_id;"
 
-        cursor.execute(query, (first_name, last_name, email, password, None, None, None, user_type,))
+        cursor.execute(query, (first_name, last_name, email,
+                               password, None, None, None, user_type,))
         user_id = cursor.fetchone()[0]
         print(user_id)
         self.conn.commit()
@@ -52,7 +54,7 @@ class UsersDAO:
 
     def get_all_tutors(self):
         cursor = self.conn.cursor()
-        query = "select * from tutor;"
+        query = "select * from users where user_type='tutor';"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -96,7 +98,6 @@ class UsersDAO:
         row = cursor.fetchone()
         if row is None:
             return False
-
 
         print(row)
         self.conn.commit()

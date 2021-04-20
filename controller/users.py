@@ -93,7 +93,7 @@ class BaseUsers:
         user_list = dao.get_all_tutors()
         result_list = []
         for row in user_list:
-            obj = self.build_tutor_map_dict(row)
+            obj = self.build_user_map_dict(row)
             result_list.append(obj)
         return jsonify(result_list), 200
 
