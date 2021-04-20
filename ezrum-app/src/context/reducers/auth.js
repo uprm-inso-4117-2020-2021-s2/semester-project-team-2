@@ -11,12 +11,14 @@ const auth = (state, action) => {
       console.log('---------')
       return {
         ...state,
-        user: action.user
+        user: action.user,
+        userType: action.userType
       };
     case actionTypes.REMOVE_USER:
       return {
         ...state,
-        user: null
+        user: null,
+        userType: null
       };
     default:
       return state

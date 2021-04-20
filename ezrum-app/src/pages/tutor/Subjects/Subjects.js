@@ -1,4 +1,5 @@
 import React from 'react'
+import { useStateValue } from '../../../context/Provider'
 
 // you can add here if you want
 const subjects = [
@@ -14,6 +15,9 @@ const subjects = [
 ]
 
 function Subjects() {
+  const { authState, tutorState } = useStateValue();
+
+  console.log('--', authState, tutorState)
   return (
     <div className='subjects'>
       <h2>MY SUBJECTS</h2>
