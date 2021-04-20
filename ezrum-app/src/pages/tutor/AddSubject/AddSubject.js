@@ -28,24 +28,24 @@ function AddSubject() {
     setDescription(e.target.value);
   };
 
-  const onCancel = (e) => {
+  const onCancel = e => {
     e.preventDefault()
     authDispatch({ type: 'REMOVE_USER' })
-    history.goBack()
   }
 
-  const onSignup = (e) => {
+  const onSignup = e => addSubject(e)
+  const addSubject = e => {
     e.preventDefault();
     const subjects = {
       subject: subject,
       price: price,
       description: description
     }
-    // console.log(subjects.subject, subjects.price, subjects.description)
     tutorDispatch({
       type: 'ADD_SUBJECT',
       subjects: subjects
     })
+    console.log('tutorState', tutorState)
     history.push('/tutor/subjects')
   }
 
@@ -75,18 +75,31 @@ function AddSubject() {
             >
               <Form.Control as="textarea" rows={3} placeholder='Description' />
             </Form.Group>
-            <div className='d-flex justify-content-center align-content-center'>
-              <div className='w-100 mr-2'>
-                <Button variant='light' type='submit' className='w-100' onClick={onCancel}>
-                  <span className='green'>Cancel</span>
+            {
+              !tutorState.subjects
+                ?
+                <div className='d-flex justify-content-center align-content-center'>
+                  <div className='w-100 mr-2'>
+                    <Button variant='light' type='submit' className='w-100' onClick={onCancel}>
+                      <span className='green'>Cancel</span>
+                    </Button>
+                  </div>
+                  <div className='w-100'>
+                    <Button variant='primary' type='submit' className='w-100' onClick={onSignup}>
+                      Sign Up
+                    </Button>
+                  </div>
+                </div>
+                :
+                <Button
+                  variant='primary'
+                  type='submit'
+                  className='w-100'
+                  onClick={addSubject}
+                >
+                  <span className='h5'>Add Subject</span>
                 </Button>
-              </div>
-              <div className='w-100'>
-                <Button variant='primary' type='submit' className='w-100' onClick={onSignup}>
-                  Sign Up
-                </Button>
-              </div>
-            </div>
+            }
           </Form>
         </Card>
       </div>
