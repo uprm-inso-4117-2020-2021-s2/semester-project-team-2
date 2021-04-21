@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../../../context/Provider'
+import axios from 'axios'
 
 // you can add here if you want
-const subjects = [
+const subjectss = [
   {
     subject: 'Calculo I',
     tutor: 'Hector Bencosme',
@@ -16,6 +17,19 @@ const subjects = [
 
 function Subjects() {
   const { authState, tutorState } = useStateValue();
+  const [subjects, setSubjects] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      return new Promise((resolve, reject) => {
+        axios.get(`/api/subjects`)
+          .then(data => {
+            console.log('subjects', data['data'])
+            setSubjects(data['data'])
+          })
+      })
+    })()
+  }, [])
 
   console.log('--', authState, tutorState)
   return (
