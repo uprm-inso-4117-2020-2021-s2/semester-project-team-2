@@ -1,5 +1,6 @@
 from config.dbconfig import pg_config
 import psycopg2
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # create table users(
 #     user_id serial primary key,
@@ -35,13 +36,16 @@ class UsersDAO:
         self.conn.commit()
         return user_id
 
-    def authenticate_user(self, email, ):
+    def authenticate_user(self, email, password):
+        # pw_hash = generate_password_hash(password)
+        # print(password, pw_hash)
+        # pw_matched = check_password_hash(pw_hash, password)
         cursor = self.conn.cursor()
-        query = "select user_id, password, user_type, first_name, last_name from users where email=%s;"
+        query = "select password from users where email=%s;"
         cursor.execute(query, (email,))
-        user_id = cursor.fetchone()[0]
+        pw_hash = cursor.fetchone()[0]
         self.conn.commit()
-        return user_id
+        return check_password_hash(pw_hash, password)
 
     def get_all_users(self):
         cursor = self.conn.cursor()

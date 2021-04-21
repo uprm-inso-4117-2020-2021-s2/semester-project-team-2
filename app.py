@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from controller.users import BaseUsers
 from controller.subject import BaseSubject
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 CORS(app)
@@ -61,12 +61,14 @@ def handle_user_authentication():
         user = request.get_json()
         email = user['email']
         password = user['password']
-        pw_hash = generate_password_hash(password)
-        pw_matched = check_password_hash(pw_hash, password)
-        print('It always returns true, needs testing')
-        print(pw_matched)
-        # return BaseUsers().authenticate_user(email, pw_matched)
-        return jsonify(pw_matched), 405
+        return BaseUsers().authenticate_user(email, password)
+        # pw_hash = generate_password_hash(password)
+        # print(password, pw_hash)
+        # pw_matched = check_password_hash(pw_hash, password)
+        # print('It always returns true, needs testing')
+        # print(pw_matched)
+        # # return BaseUsers().authenticate_user(email, pw_matched)
+        # return jsonify(pw_matched), 405
     else:
         return jsonify("Method Not Allowed"), 405
 

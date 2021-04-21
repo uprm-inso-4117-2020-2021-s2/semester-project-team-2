@@ -62,11 +62,14 @@ class BaseUsers:
 
     def authenticate_user(self, email, password):
         dao = UsersDAO()
-        user_id = dao.authenticate_user(email, password)
+        auth = dao.authenticate_user(email, password)
         message = {}
-        if user_id:
-            message['message'] = 'user successfully created with id = %s' % user_id
-        return jsonify(message), 201
+        if auth:
+            message['message'] = 'user authentication successfully'
+            return jsonify(message), 201
+        else:
+            message['message'] = 'user authentication failed'
+            return jsonify(message), 401
 
     def get_all_users(self):
         dao = UsersDAO()
