@@ -12,7 +12,6 @@ const tutor = (state, action) => {
       console.log(action.tutor)
       console.log({
         subjects: [...state.subjects, action.subject],
-        tutor_id: action.tutor_id
       })
       return {
         subjects: [...state.subjects, action.subject]
