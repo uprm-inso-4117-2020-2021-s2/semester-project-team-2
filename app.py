@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from controller.users import BaseUsers
 from controller.subject import BaseSubject
 from flask_cors import CORS
@@ -8,16 +8,37 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+# def build_preflight_response():
+#     response = make_response()
+#     response.headers.add("Access-Control-Allow-Origin", "*")
+#     response.headers.add('Access-Control-Allow-Headers', "*")
+#     response.headers.add('Access-Control-Allow-Methods', "*")
+#     return response
 
-@app.route('/api/users', methods=['POST', 'GET'])
+def build_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+# @app.route('/', methods=['OPTIONS','POST'])
+# def greeting():
+#     if request.method == 'OPTIONS':
+#         print('--OPTIONS')
+#         return build_preflight_response()
+#     elif request.method == 'POST':
+#         req = request.get_json()
+#         print('post')
+#         # query user with req['id']
+#         # for demonstration, we assume the username to be Eric
+#         return build_actual_response(jsonify({ 'name': 'Eric' }))
+
+@app.route('/api/users', methods=['POST', 'GET', 'DELETE'])
 def handle_users():
     if request.method == 'GET':
         return BaseUsers().get_all_users()
     if request.method == 'POST':
         user = request.get_json()
+        print('user')
+        print(user)
         first_name = user['first_name']
         last_name = user['last_name']
         email = user['email']
@@ -38,13 +59,21 @@ def handle_user(user_id):
         last_name = user['last_name']
         email = user['email']
         password = user['password']
-        user_type = user['user_type']
+        # user_type = user['user_type']
         pw_hash = generate_password_hash(password)
         return BaseUsers().update_user_by_id(first_name, last_name, email, pw_hash, user_id)
     if request.method == 'DELETE':
         user = request.get_json()
         user_type = user['user_type']
         return BaseUsers().delete_user_by_id(user_id, user_type)
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+@app.route('/api/users/<string:email>', methods=['GET'])
+def handle_user_by_email(email):
+    if request.method == 'GET':
+        # return build_actual_response(BaseUsers().get_user_id_by_email(email))
+        return BaseUsers().get_user_id_by_email(email)
     else:
         return jsonify("Method Not Allowed"), 405
 
@@ -55,20 +84,23 @@ def handle_tutors():
     else:
         return jsonify("Method Not Allowed"), 405
 
+# @app.route('/api/tutors/<int:tutor_id>', methods=['GET'])
+# def handle_tutor_id():
+#     if request.method == 'GET':
+#         return BaseUsers().get_tutorid_by_userid()
+#     else:
+#         return jsonify("Method Not Allowed"), 405
+
 @app.route('/api/auth/login', methods=['POST'])
 def handle_user_authentication():
     if request.method == 'POST':
         user = request.get_json()
         email = user['email']
         password = user['password']
-        return BaseUsers().authenticate_user(email, password)
-        # pw_hash = generate_password_hash(password)
-        # print(password, pw_hash)
-        # pw_matched = check_password_hash(pw_hash, password)
-        # print('It always returns true, needs testing')
-        # print(pw_matched)
-        # # return BaseUsers().authenticate_user(email, pw_matched)
-        # return jsonify(pw_matched), 405
+        res = BaseUsers().authenticate_user(email, password)
+        print(res)
+        return res
+        # return BaseUsers().authenticate_user(email, password)
     else:
         return jsonify("Method Not Allowed"), 405
 

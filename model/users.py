@@ -1,3 +1,4 @@
+from flask import jsonify
 from config.dbconfig import pg_config
 import psycopg2
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,21 +26,29 @@ class UsersDAO:
 
     def create_user(self, first_name, last_name, email, password, user_type):
         cursor = self.conn.cursor()
-        query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
-                "values (%s, %s, %s, %s, %s, %s, %s, %s) returning user_id as id) insert into tutor (user_id) " \
-                "select id from new_user returning user_id;"
+        email_query = "select email from users where email=%s;"
+        cursor.execute(email_query, (email,))
+        email_row = cursor.fetchone()
+        print(email)
+        if email_row:
+            return None
 
-        cursor.execute(query, (first_name, last_name, email,
-                               password, None, None, None, user_type,))
-        user_id = cursor.fetchone()[0]
-        print(user_id)
+
+        # query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
+        #         "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
+        #         "select user_id from new_user returning *;"
+        query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
+                "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
+                "select user_id from new_user;" \
+                "select * from users where email=%s;"
+
+        cursor.execute(query, (first_name, last_name, email, password, None, None, None, user_type, email))
+        user = cursor.fetchone()
+        print(user)
         self.conn.commit()
-        return user_id
+        return user
 
     def authenticate_user(self, email, password):
-        # pw_hash = generate_password_hash(password)
-        # print(password, pw_hash)
-        # pw_matched = check_password_hash(pw_hash, password)
         cursor = self.conn.cursor()
         query = "select password from users where email=%s;"
         cursor.execute(query, (email,))
@@ -78,19 +87,29 @@ class UsersDAO:
         cursor = self.conn.cursor()
         query = "select * from users where user_id = %s;"
         cursor.execute(query, (user_id,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        print(result)
-        return result
+        user = cursor.fetchone()
+        self.conn.commit()
+        return user
+
+
+    def get_user_id_by_email(self, email):
+        cursor = self.conn.cursor()
+        query = "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
+        cursor.execute(query, (email,))
+        user = cursor.fetchone()
+        self.conn.commit()
+        return user
+
+    def get_tutorid_by_userid(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select * from tutor where user_id = %s;"
+        cursor.execute(query, (user_id,))
+        tutor_id = cursor.fetchone()[0]
+        self.conn.commit()
+        return tutor_id
 
     def delete_user_by_id(self, user_id, user_type):
         cursor = self.conn.cursor()
-        # query = "update follows set is_followed = false where follower_id = %s; update users set is_active = false where user_id = %s returning user_id;"
-        # query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
-        #         "values (%s, %s, %s, %s, %s, %s, %s, %s) returning user_id as id) insert into tutor (user_id) " \
-        #         "select id from new_user returning user_id;"
-
         query = ""
         if user_type == "tutor":
             query = "with deleted_tutor as (delete from tutor where user_id=%s returning user_id) " \

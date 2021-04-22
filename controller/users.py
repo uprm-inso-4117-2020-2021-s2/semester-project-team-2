@@ -43,6 +43,9 @@ class BaseUsers:
             'about_me': row[7],
             'user_type': row[8]
         }
+        if len(row) > 9:
+            result['tutor_id'] = row[9]
+
         return result
 
     def build_tutor_map_dict(self, row):
@@ -54,11 +57,13 @@ class BaseUsers:
 
     def create_user(self, first_name, last_name, email, password, user_type):
         dao = UsersDAO()
-        user_id = dao.create_user(first_name, last_name, email, password, user_type)
-        message = {}
-        if user_id:
-            message['message'] = 'user successfully created with id = %s' % user_id
-        return jsonify(message), 200
+        user = dao.create_user(first_name, last_name, email, password, user_type)
+        # if user == 'email already exists':
+        #     return email, 409
+        if user:
+            return self.build_auth_map_dict(user), 200
+        else:
+            return 'email already exists', 409
 
     def authenticate_user(self, email, password):
         dao = UsersDAO()
@@ -79,6 +84,7 @@ class BaseUsers:
             obj = self.build_user_map_dict(row)
             result_list.append(obj)
         return jsonify(result_list), 200
+
 
     def delete_user_by_id(self, user_id, user_type):
         dao = UsersDAO()
@@ -103,8 +109,19 @@ class BaseUsers:
     def get_user_by_id(self, user_id):
         dao = UsersDAO()
         user = dao.get_user_by_id(user_id)
-        user = self.build_user_map_dict(user[0])
-        return jsonify(user), 200
+        print()
+        return jsonify(self.build_user_map_dict(user)), 200
 
+    def get_user_id_by_email(self, email):
+        dao = UsersDAO()
+        user = dao.get_user_id_by_email(email)
+        print('user', user, self.build_user_map_dict(user))
+        print(jsonify(self.build_user_map_dict(user)))
+        # return self.build_user_map_dict(user), 200
+        return jsonify(self.build_user_map_dict(user)), 200
 
+    def get_tutorid_by_userid(self, user_id):
+        dao = UsersDAO()
+        tutor_id = dao.get_tutorid_by_userid(user_id)
+        return tutor_id, 200
 
