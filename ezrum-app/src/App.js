@@ -8,15 +8,6 @@ import Navbar from './components/Navbar/Navbar'
 import TutorView from './pages/tutor/TutorView'
 import TutoreeView from './pages/tutoree/TutoreeView'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-// import { createResource } from './PersonApi'
-// import { Person } from './Person'
-// import { Num } from './Num'
-// import { ErrorBoundary } from './ErrorBoundary'
-// import { wrapPromise } from './PersonApi'
-// import { PostResult } from './PostResult'
-// import { useStateValue } from './context/Provider'
-
-// const initialResource = createResource()
 
 /**
  * 

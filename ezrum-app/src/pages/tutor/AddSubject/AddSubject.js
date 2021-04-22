@@ -4,9 +4,6 @@ import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
 import { useHistory } from "react-router-dom";
-// import { createResource } from '../../../PersonApi'
-
-
 
 
 function AddSubject({ handleSignup }) {
@@ -18,8 +15,6 @@ function AddSubject({ handleSignup }) {
   const [description, setDescription] = useState('DESCRIPTION');
   const { authState, authDispatch, tutorState, tutorDispatch } = useStateValue();
   const history = useHistory()
-  // console.log('tutorState', tutorState)
-  // console.log('authState', authState)
 
   const handleSubjectChange = e => {
     setSubject(e.target.value);
@@ -39,7 +34,6 @@ function AddSubject({ handleSignup }) {
   }
 
 
-
   const onSignup = e => addSubject(e)
   const addSubject = e => {
     e.preventDefault();
@@ -55,20 +49,12 @@ function AddSubject({ handleSignup }) {
     })
 
 
-
     console.log('handleSignup', handleSignup)
     if (handleSignup) {
-      // const res = handleSignup()
-      // console.log('ressssss', res)
       handleSignup()
-
-      // console.log('tutorState', tutorState)
-      if (true)
+      if (true) //apply condition for when signup submission - email already exists
         history.push('/tutor/subjects')
     }
-
-
-
   }
 
 
