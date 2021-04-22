@@ -22,7 +22,7 @@ function NabvarView() {
         </Nav>
         <Nav className='mr-5'>
           {
-            (authState.user && tutorState.subjects)
+            (authState.email && tutorState.subjects?.length > 0)
               ?
               <div className='d-flex align-items-center'>
                 <div>

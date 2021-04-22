@@ -7,5 +7,5 @@
  * - description (tutor's description of his experience and whatnot)
  */
 export default {
-  subjects: null
+  subjects: []
 }

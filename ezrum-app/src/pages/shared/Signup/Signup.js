@@ -1,26 +1,46 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import './Signup.css'
 import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
 import { useRouteMatch, useHistory } from "react-router-dom"
 import AddSubject from '../../tutor/AddSubject/AddSubject'
-import { urlSlug } from '../../../util/Util'
+import { urlSlug, randomStr } from '../../../util/Util'
 import { tutorViews } from '../../../util/ContentViews'
+// import { createResource } from '../../../PersonApi'
+// import { Subjectss } from '../../../Subjectss'
+
+// const initialResource = createResource()
 
 function Signup() {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('')
-  const [email, setEmail] = useState('kevin.ramirez3@upr.edu');
-  const [password, setPassword] = useState('Bestlife!8');
-  const [confirmPassword, setConfirmPassword] = useState('Bestlife!8')
+  const [firstName, setFirstName] = useState('Antonny');
+  const [lastName, setLastName] = useState('Pagan');
+  const [email, setEmail] = useState(randomStr() + '@yahoo.com');
+  const [password, setPassword] = useState('ezrum!2');
+  const [confirmPassword, setConfirmPassword] = useState('ezrum!2')
+  // const [user, setUser] = useState(null)
   const { tutorState, authState, authDispatch } = useStateValue();
+
+  console.log('randomStr', randomStr())
+  console.log('----tutorState', tutorState)
 
   let { url } = useRouteMatch();
   const history = useHistory();
 
-  console.log('auth, ...', authState)
+  // console.log('auth, ...', authState)
+
+  const handleFirstNameChange = e => {
+    console.log(e.target.value);
+    setFirstName(e.target.value);
+  };
+
+  const handleLastNameChange = e => {
+    console.log(e.target.value);
+    setLastName(e.target.value);
+  };
 
   const handleEmailChange = e => {
     console.log(e.target.value);
@@ -44,14 +64,21 @@ function Signup() {
     // setConfirmPassword('Bestlife!8');
     // console.log('-', email, password, confirmPassword)
     const user = {
+      first_name: firstName,
+      last_name: lastName,
       email: email,
-      password: password
+      password: password,
+      user_type: 'tutor'
     }
+    console.log('tutorContinue', user)
     authDispatch({
       type: 'SET_USER',
-      user: user,
-      userType: 'tutor'
+      ...user
     })
+    // authDispatch({
+    //   type: 'SET_USER',
+    //   user: user
+    // })
   }
 
   const tutoreeCancel = (e) => {
@@ -64,15 +91,68 @@ function Signup() {
     console.log('tutoreeSignup')
   }
 
+  const handleSignup = async () => {
+    // const authData = {
+    //   first_name: authState.first_name,
+    //   last_name: authState.last_name,
+    //   email: authState.email,
+    //   password: authState.password,
+    //   user_type: authState.user_type
+    // };
+    console.log('randomStr', randomStr())
+
+    const authData = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+      user_type: 'tutor'
+      // first_name: 'Kevin',
+      // last_name: 'Ramirez',
+      // email: email,
+      // // email: 'bq@yahoo.com',
+      // password: 'postfinallyworked',
+      // user_type: 'tutor'
+    };
+    await fetch(`http://localhost:5000/api/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(authData)
+    })
+      .then(res => res.json())
+      .then(user => {
+        console.log('user', user)
+        authDispatch({
+          type: 'SET_USER_ID',
+          user_id: user.user_id,
+        })
+        console.log('authState', authState)
+      })
+      .catch(err => console.log(err))
+  }
+
+  // const [resource, setResource] = useState(initialResource)
+
   const handleTutor = () => {
-    if (authState.user && tutorState.subjects) {
+    console.log('authState', authState)
+    console.log('tutorState', tutorState)
+
+    if (authState.email && tutorState.subjects?.length > 0) {
       console.log('Warning: Cannot update during an existing state transition ...')
       history.push('/tutor/subjects')
+      // console.log('=-=-=--', authState.user_id)
+      // return (
+      //   <Suspense fallback={<div>LOADING ...</div>}>
+      //     {/* {redirectTutor(resource)} */}
+      //     <Subjectss resource={resource} />
+      //   </Suspense>
+      // )
+      // history.push(`/tutor/subjects/${}`)
     }
-    else if (authState.user) {
+    else if (authState.email) {
       console.log('AddSubject')
       return (
-        <AddSubject />
+        <AddSubject handleSignup={handleSignup} />
       )
     } else {
       console.log('else')
@@ -94,6 +174,18 @@ function Signup() {
         </h3>
         <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
         <Form>
+          <Form.Group
+            controlId='firstName'
+            onChange={handleFirstNameChange}
+          >
+            <Form.Control type='text' placeholder='First Name' />
+          </Form.Group>
+          <Form.Group
+            controlId='lastName'
+            onChange={handleLastNameChange}
+          >
+            <Form.Control type='text' placeholder='Last Name' />
+          </Form.Group>
           <Form.Group
             controlId='email'
             onChange={handleEmailChange}

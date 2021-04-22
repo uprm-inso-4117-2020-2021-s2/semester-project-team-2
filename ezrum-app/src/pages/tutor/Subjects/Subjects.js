@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useStateValue } from '../../../context/Provider'
-import axios from 'axios'
+// import { createResource } from '../../../PersonApi'
+// import { Subjectss } from '../../../Subjectss'
+
+// const initialResource = createResource()
 
 // you can add here if you want
 const subjectss = [
@@ -16,26 +19,88 @@ const subjectss = [
 ]
 
 function Subjects() {
-  const { authState, tutorState } = useStateValue();
   const [subjects, setSubjects] = useState([])
+  // const [resource, setResource] = useState(initialResource)
+  const { authState, tutorState, tutorDispatch } = useStateValue();
+
+  // const [auth, setAuth] = useState(authState)
+  console.log('Subjects')
+  // console.log('tutorState', tutorState)
+  // console.log('authState', authState)
 
   useEffect(() => {
-    (async () => {
-      return new Promise((resolve, reject) => {
-        axios.get(`/api/subjects`)
-          .then(data => {
-            console.log('subjects', data['data'])
-            setSubjects(data['data'])
-          })
-      })
-    })()
+    console.log('authState.user_id', authState.user_id)
+    // setTimeout(() => {
+    //   console.log('--', authState, tutorState)
+    //   return console.log('authState.user_id', authState.user_id)
+    // }, 4000);
+    // setTimeout(() => (fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' },
+    // })
+    //   .then(res => res.json())
+    //   .then(user => {
+    //     console.log('user', user)
+    //   })
+    //   .catch(err => console.log(err)))(), 3000);
   }, [])
 
-  console.log('--', authState, tutorState)
+  useEffect(() => {
+    console.log('authState.user_id', authState.user_id);
+    if (authState.user_id)
+      fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
+        // fetch(`http://localhost:5000/api/subjects/1`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(res => res.json())
+        .then(subjects => {
+          console.log('subjects', subjects)
+        })
+        .catch(err => console.log(err))
+  }, [authState])
+
+  useEffect(() => {
+    console.log('authState.user_id', authState.user_id);
+    if (authState.user_id)
+      fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(res => res.json())
+        .then(subjects => {
+          console.log('subjects', subjects)
+        })
+        .catch(err => console.log(err))
+  }, [tutorState])
+
+  // console.log('--', authState, tutorState)
+
+
   return (
     <div className='subjects'>
       <h2>MY SUBJECTS</h2>
       <hr className='m-0' />
+      {/* <Suspense fallback={
+        <h1>loading num...</h1>
+      }>
+        <Subjectss resource={resource} user_id={authState.user_id} />
+      </Suspense> */}
+      {/* {
+        // authState.user_id
+        //   ?
+          // <>
+            // <h2>MY SUBJECTS</h2>
+            // <hr className='m-0' />
+            // <Suspense fallback={
+            //   <h1>loading num...</h1>
+            // }>
+            //   <Num resource={resource} />
+            // </Suspense>
+        // </>
+        // : null
+      } */}
+
     </div>
   )
 }

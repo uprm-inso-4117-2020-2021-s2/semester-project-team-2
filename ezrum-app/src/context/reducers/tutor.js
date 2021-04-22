@@ -3,24 +3,28 @@ export const actionTypes = {
   REMOVE_SUBJECT: "REMOVE_SUBJECT",
 }
 
-const auth = (state, action) => {
+const tutor = (state, action) => {
   console.log('state, action')
   console.log(state, action)
   switch (action.type) {
     case actionTypes.ADD_SUBJECT:
-      console.log('---------')
+      console.log('[...state.subjects]', [...state.subjects])
+      console.log(action.tutor)
+      console.log({
+        subjects: [...state.subjects, action.subject],
+        tutor_id: action.tutor_id
+      })
       return {
-        ...state,
-        subjects: action.subjects
-      };
-    case actionTypes.REMOVE_SUBJECT:
+        subjects: [...state.subjects, action.subject]
+      }
+    // return [...state.subjects, action.subject]
 
-      return {
-        ...state,
-      };
+    case actionTypes.REMOVE_SUBJECT:
+      // we may not implement this
+      return [...state];
     default:
       return state
   }
 }
 
-export default auth;
+export default tutor;
