@@ -7,3 +7,6 @@ env.bak/
 venv.bak/
 .idea
 backend/
+node_modules/
+ezrum-app/node_modules
+ezrum-app/.idea
