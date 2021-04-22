@@ -7,10 +7,6 @@ import { useRouteMatch, useHistory } from "react-router-dom"
 import AddSubject from '../../tutor/AddSubject/AddSubject'
 import { urlSlug, randomStr } from '../../../util/Util'
 import { tutorViews } from '../../../util/ContentViews'
-// import { createResource } from '../../../PersonApi'
-// import { Subjectss } from '../../../Subjectss'
-
-// const initialResource = createResource()
 
 function Signup() {
   // const [email, setEmail] = useState('');
@@ -21,7 +17,6 @@ function Signup() {
   const [email, setEmail] = useState(randomStr() + '@yahoo.com');
   const [password, setPassword] = useState('ezrum!2');
   const [confirmPassword, setConfirmPassword] = useState('ezrum!2')
-  // const [user, setUser] = useState(null)
   const { tutorState, authState, authDispatch } = useStateValue();
 
   console.log('randomStr', randomStr())
@@ -29,8 +24,6 @@ function Signup() {
 
   let { url } = useRouteMatch();
   const history = useHistory();
-
-  // console.log('auth, ...', authState)
 
   const handleFirstNameChange = e => {
     console.log(e.target.value);
@@ -75,10 +68,6 @@ function Signup() {
       type: 'SET_USER',
       ...user
     })
-    // authDispatch({
-    //   type: 'SET_USER',
-    //   user: user
-    // })
   }
 
   const tutoreeCancel = (e) => {
@@ -92,15 +81,24 @@ function Signup() {
   }
 
   const handleSignup = async () => {
-    // const authData = {
-    //   first_name: authState.first_name,
-    //   last_name: authState.last_name,
-    //   email: authState.email,
-    //   password: authState.password,
-    //   user_type: authState.user_type
-    // };
-    console.log('randomStr', randomStr())
-
+    const getTutorSubjects = (user) => {
+      const subjectData = {
+        subject_name: "Physics 1",
+        price: 40,
+        pricing_rate: "hourly",
+        description: "description describing his or her experience on tutoring this subject"
+      };
+      fetch(`http://localhost:5000/api/subjects/${user.tutor_id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(subjectData)
+      })
+        .then(res => res.json())
+        .then(subjects => {
+          console.log('subjects', subjects)
+        })
+        .catch(err => console.log(err))
+    }
     const authData = {
       first_name: firstName,
       last_name: lastName,
@@ -125,10 +123,12 @@ function Signup() {
         authDispatch({
           type: 'SET_USER_ID',
           user_id: user.user_id,
+          tutor_id: user.tutor_id,
         })
+        getTutorSubjects(user)
         console.log('authState', authState)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
 
   // const [resource, setResource] = useState(initialResource)

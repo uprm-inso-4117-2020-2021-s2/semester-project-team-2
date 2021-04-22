@@ -40,7 +40,7 @@ class UsersDAO:
         query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
                 "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
                 "select user_id from new_user;" \
-                "select * from users where email=%s;"
+                "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
 
         cursor.execute(query, (first_name, last_name, email, password, None, None, None, user_type, email))
         user = cursor.fetchone()

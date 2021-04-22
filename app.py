@@ -8,28 +8,9 @@ app = Flask(__name__)
 CORS(app)
 
 
-# def build_preflight_response():
-#     response = make_response()
+# def build_actual_response(response):
 #     response.headers.add("Access-Control-Allow-Origin", "*")
-#     response.headers.add('Access-Control-Allow-Headers', "*")
-#     response.headers.add('Access-Control-Allow-Methods', "*")
 #     return response
-
-def build_actual_response(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
-# @app.route('/', methods=['OPTIONS','POST'])
-# def greeting():
-#     if request.method == 'OPTIONS':
-#         print('--OPTIONS')
-#         return build_preflight_response()
-#     elif request.method == 'POST':
-#         req = request.get_json()
-#         print('post')
-#         # query user with req['id']
-#         # for demonstration, we assume the username to be Eric
-#         return build_actual_response(jsonify({ 'name': 'Eric' }))
 
 @app.route('/api/users', methods=['POST', 'GET', 'DELETE'])
 def handle_users():
@@ -37,8 +18,6 @@ def handle_users():
         return BaseUsers().get_all_users()
     if request.method == 'POST':
         user = request.get_json()
-        print('user')
-        print(user)
         first_name = user['first_name']
         last_name = user['last_name']
         email = user['email']
@@ -69,14 +48,6 @@ def handle_user(user_id):
     else:
         return jsonify("Method Not Allowed"), 405
 
-@app.route('/api/users/<string:email>', methods=['GET'])
-def handle_user_by_email(email):
-    if request.method == 'GET':
-        # return build_actual_response(BaseUsers().get_user_id_by_email(email))
-        return BaseUsers().get_user_id_by_email(email)
-    else:
-        return jsonify("Method Not Allowed"), 405
-
 @app.route('/api/tutors', methods=['GET'])
 def handle_tutors():
     if request.method == 'GET':
@@ -84,23 +55,13 @@ def handle_tutors():
     else:
         return jsonify("Method Not Allowed"), 405
 
-# @app.route('/api/tutors/<int:tutor_id>', methods=['GET'])
-# def handle_tutor_id():
-#     if request.method == 'GET':
-#         return BaseUsers().get_tutorid_by_userid()
-#     else:
-#         return jsonify("Method Not Allowed"), 405
-
 @app.route('/api/auth/login', methods=['POST'])
 def handle_user_authentication():
     if request.method == 'POST':
         user = request.get_json()
         email = user['email']
         password = user['password']
-        res = BaseUsers().authenticate_user(email, password)
-        print(res)
-        return res
-        # return BaseUsers().authenticate_user(email, password)
+        return BaseUsers().authenticate_user(email, password)
     else:
         return jsonify("Method Not Allowed"), 405
 
@@ -122,6 +83,15 @@ def handle_subject(tutor_id):
         pricing_rate = subject['pricing_rate']
         description = subject['description']
         return BaseSubject().create_tutor_subject(subject_name, price, pricing_rate, description, tutor_id)
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+# FOR TESTING PURPOSES
+@app.route('/api/users/<string:email>', methods=['GET'])
+def handle_user_by_email(email):
+    if request.method == 'GET':
+        # return build_actual_response(BaseUsers().get_user_id_by_email(email))
+        return BaseUsers().get_user_id_by_email(email)
     else:
         return jsonify("Method Not Allowed"), 405
 

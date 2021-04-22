@@ -1,9 +1,5 @@
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../../../context/Provider'
-// import { createResource } from '../../../PersonApi'
-// import { Subjectss } from '../../../Subjectss'
-
-// const initialResource = createResource()
 
 // you can add here if you want
 const subjectss = [
@@ -20,87 +16,48 @@ const subjectss = [
 
 function Subjects() {
   const [subjects, setSubjects] = useState([])
-  // const [resource, setResource] = useState(initialResource)
-  const { authState, tutorState, tutorDispatch } = useStateValue();
-
-  // const [auth, setAuth] = useState(authState)
-  console.log('Subjects')
-  // console.log('tutorState', tutorState)
-  // console.log('authState', authState)
+  const { authState } = useStateValue();
 
   useEffect(() => {
-    console.log('authState.user_id', authState.user_id)
-    // setTimeout(() => {
-    //   console.log('--', authState, tutorState)
-    //   return console.log('authState.user_id', authState.user_id)
-    // }, 4000);
-    // setTimeout(() => (fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' },
-    // })
-    //   .then(res => res.json())
-    //   .then(user => {
-    //     console.log('user', user)
-    //   })
-    //   .catch(err => console.log(err)))(), 3000);
-  }, [])
-
-  useEffect(() => {
-    console.log('authState.user_id', authState.user_id);
-    if (authState.user_id)
-      fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
-        // fetch(`http://localhost:5000/api/subjects/1`, {
+    console.log('tutorView useEffect', authState.tutor_id, authState)
+    if (authState.tutor_id)
+      fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
         .then(res => res.json())
         .then(subjects => {
           console.log('subjects', subjects)
+          setSubjects(subjects)
         })
         .catch(err => console.log(err))
   }, [authState])
 
-  useEffect(() => {
-    console.log('authState.user_id', authState.user_id);
-    if (authState.user_id)
-      fetch(`http://localhost:5000/api/subjects/${authState.user_id}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-        .then(res => res.json())
-        .then(subjects => {
-          console.log('subjects', subjects)
-        })
-        .catch(err => console.log(err))
-  }, [tutorState])
-
-  // console.log('--', authState, tutorState)
 
 
   return (
     <div className='subjects'>
       <h2>MY SUBJECTS</h2>
       <hr className='m-0' />
-      {/* <Suspense fallback={
-        <h1>loading num...</h1>
-      }>
-        <Subjectss resource={resource} user_id={authState.user_id} />
-      </Suspense> */}
       {/* {
-        // authState.user_id
-        //   ?
-          // <>
-            // <h2>MY SUBJECTS</h2>
-            // <hr className='m-0' />
-            // <Suspense fallback={
-            //   <h1>loading num...</h1>
-            // }>
-            //   <Num resource={resource} />
-            // </Suspense>
-        // </>
-        // : null
+        subjects?.map(({ subject_name, price, pricing_rate, description }) => {
+          return (
+            <div className="d-flex ">
+              Insert subject styling here 
+            </div>
+          )
+        })
       } */}
 
+      {
+        subjects?.map(subject => {
+          return (
+            <div key={subject.subject_name} className="d-flex ">
+              {JSON.stringify(subject)}
+            </div>
+          )
+        })
+      }
     </div>
   )
 }

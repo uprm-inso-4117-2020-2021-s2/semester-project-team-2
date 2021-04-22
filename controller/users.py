@@ -58,10 +58,8 @@ class BaseUsers:
     def create_user(self, first_name, last_name, email, password, user_type):
         dao = UsersDAO()
         user = dao.create_user(first_name, last_name, email, password, user_type)
-        # if user == 'email already exists':
-        #     return email, 409
         if user:
-            return self.build_auth_map_dict(user), 200
+            return self.build_user_map_dict(user), 200
         else:
             return 'email already exists', 409
 
