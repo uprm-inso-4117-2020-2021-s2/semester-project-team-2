@@ -1,3 +1,5 @@
+import { Next } from "react-bootstrap/esm/PageItem"
+
 export const actionTypes = {
   ADD_SUBJECT: "ADD_SUBJECT",
   REMOVE_SUBJECT: "REMOVE_SUBJECT",

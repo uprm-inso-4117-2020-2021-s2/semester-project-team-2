@@ -81,24 +81,6 @@ function Signup() {
   }
 
   const handleSignup = async () => {
-    const getTutorSubjects = (user) => {
-      const subjectData = {
-        subject_name: "Physics 1",
-        price: 40,
-        pricing_rate: "hourly",
-        description: "description describing his or her experience on tutoring this subject"
-      };
-      fetch(`http://localhost:5000/api/subjects/${user.tutor_id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(subjectData)
-      })
-        .then(res => res.json())
-        .then(subjects => {
-          console.log('subjects', subjects)
-        })
-        .catch(err => console.log(err))
-    }
     const authData = {
       first_name: firstName,
       last_name: lastName,
@@ -107,11 +89,20 @@ function Signup() {
       user_type: 'tutor'
       // first_name: 'Kevin',
       // last_name: 'Ramirez',
-      // email: email,
-      // // email: 'bq@yahoo.com',
+      // email: randomStr() + '@yahoo.com',
       // password: 'postfinallyworked',
       // user_type: 'tutor'
     };
+
+    // const options = {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(authData)
+    // }
+    // // const res = await useFetch('/users', options, undefined, true, undefined);
+    // // console.log(res)
+
+
     await fetch(`http://localhost:5000/api/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -125,7 +116,6 @@ function Signup() {
           user_id: user.user_id,
           tutor_id: user.tutor_id,
         })
-        getTutorSubjects(user)
         console.log('authState', authState)
       })
       .catch(err => console.log(err));

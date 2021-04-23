@@ -49,7 +49,6 @@ function AddSubject({ handleSignup }) {
     })
 
 
-    console.log('handleSignup', handleSignup)
     if (handleSignup) {
       handleSignup()
       if (true) //apply condition for when signup submission - email already exists
