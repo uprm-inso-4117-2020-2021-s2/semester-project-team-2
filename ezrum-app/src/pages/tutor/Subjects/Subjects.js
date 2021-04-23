@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../../../context/Provider'
+import { useFetch } from '../../../hooks/useFetch'
 
 // you can add here if you want
 const subjectss = [
@@ -18,21 +19,27 @@ function Subjects() {
   const [subjects, setSubjects] = useState([])
   const { authState } = useStateValue();
 
-  useEffect(() => {
-    console.log('tutorView useEffect', authState.tutor_id, authState)
-    if (authState.tutor_id)
-      fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-        .then(res => res.json())
-        .then(subjects => {
-          console.log('subjects', subjects)
-          setSubjects(subjects)
-        })
-        .catch(err => console.log(err))
-  }, [authState])
+  // useEffect(() => {
+  //   console.log('tutorView useEffect', authState.tutor_id, authState)
+  //   if (authState.tutor_id)
+  //     fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
+  //       method: 'GET',
+  //       headers: { 'Content-Type': 'application/json' },
+  //     })
+  //       .then(res => res.json())
+  //       .then(subjects => {
+  //         console.log('subjects', subjects)
+  //         setSubjects(subjects)
+  //       })
+  //       .catch(err => console.log(err))
+  // }, [authState])
 
+  const options = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  }
+  // useFetch(`subjects/${authState.tutor_id}`, options, setSubjects, authState.tutor_id, authState);
+  useFetch(`/subjects/${authState.tutor_id}`, options, setSubjects, authState.tutor_id, undefined, authState);
 
 
   return (
