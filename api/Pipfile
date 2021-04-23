@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 pytest="*"
 python-dotenv = "*"
 selenium = "*"
+behave = "*"
 
 [dev-packages]
 
