@@ -1,0 +1,14 @@
+.navbar {
+  background-color: #4BBA2D;
+}
+
+.navbar-nav a .btn {
+  margin: 0 1em;
+}
+
+a {
+  color: white !important
+}
+a:hover {
+  font-size: 17px
+}
