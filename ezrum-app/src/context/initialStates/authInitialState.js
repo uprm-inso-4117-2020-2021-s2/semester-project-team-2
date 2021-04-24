@@ -18,5 +18,11 @@
  *  - subject
  */
 export default {
-  user: null,
+  // user: null,
+  user_id: null,
+  first_name: null,
+  last_name: null,
+  email: null,
+  password: null,
+  user_type: null
 }

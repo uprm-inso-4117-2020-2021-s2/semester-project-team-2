@@ -5,13 +5,9 @@ import Home from './pages/shared/Home/Home'
 import Signup from './pages/shared/Signup/Signup'
 import Signin from './pages/shared/Signin/Signin'
 import Navbar from './components/Navbar/Navbar'
-import AddSubject from './pages/tutor/AddSubject/AddSubject'
 import TutorView from './pages/tutor/TutorView'
 import TutoreeView from './pages/tutoree/TutoreeView'
-import { useStateValue } from './context/Provider'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import { GlobalProvider } from './context/Provider'
-
 
 /**
  * 

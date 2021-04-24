@@ -47,7 +47,7 @@ function Home() {
           <form className='home__form p-4'>
             <h2 className='getStartedTitle'>
               Get Started!
-              </h2>
+            </h2>
             <hr />
             <div>
               <p className='formBody'>

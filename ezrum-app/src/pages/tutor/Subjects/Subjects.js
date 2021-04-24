@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../../../context/Provider'
+import { useFetch } from '../../../hooks/useFetch'
 
 // you can add here if you want
-const subjects = [
+const subjectss = [
   {
     subject: 'Calculo I',
     tutor: 'Hector Bencosme',
@@ -15,13 +16,55 @@ const subjects = [
 ]
 
 function Subjects() {
-  const { authState, tutorState } = useStateValue();
+  const [subjects, setSubjects] = useState([])
+  const { authState } = useStateValue();
 
-  console.log('--', authState, tutorState)
+  // useEffect(() => {
+  //   console.log('tutorView useEffect', authState.tutor_id, authState)
+  //   if (authState.tutor_id)
+  //     fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
+  //       method: 'GET',
+  //       headers: { 'Content-Type': 'application/json' },
+  //     })
+  //       .then(res => res.json())
+  //       .then(subjects => {
+  //         console.log('subjects', subjects)
+  //         setSubjects(subjects)
+  //       })
+  //       .catch(err => console.log(err))
+  // }, [authState])
+
+  const options = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  }
+  // useFetch(`subjects/${authState.tutor_id}`, options, setSubjects, authState.tutor_id, authState);
+  useFetch(`/subjects/${authState.tutor_id}`, options, setSubjects, authState.tutor_id, undefined, authState);
+
+
   return (
     <div className='subjects'>
       <h2>MY SUBJECTS</h2>
       <hr className='m-0' />
+      {/* {
+        subjects?.map(({ subject_name, price, pricing_rate, description }) => {
+          return (
+            <div className="d-flex ">
+              Insert subject styling here 
+            </div>
+          )
+        })
+      } */}
+
+      {
+        subjects?.map(subject => {
+          return (
+            <div key={subject.subject_name} className="d-flex ">
+              {JSON.stringify(subject)}
+            </div>
+          )
+        })
+      }
     </div>
   )
 }
