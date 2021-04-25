@@ -1,4 +1,4 @@
-from sample_test_environment.test_pom import LoginPage, RegisterPage
+from test_pom import LoginPage, RegisterPage
 
 
 def test_login(selenium_test):
