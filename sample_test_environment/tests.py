@@ -10,7 +10,7 @@ def test_login(selenium_test):
     login_page.visit()
     tutor_register = RegisterPage(driver, user_type='tutor')
     login_page.tutor_register.click()
-    assert driver.current_url == "fail"
+    assert driver.current_url == tutor_register.page_url()
 
     # Test student register link works as expected
     login_page.visit()
