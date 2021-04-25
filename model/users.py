@@ -1,7 +1,6 @@
-from flask import jsonify
 from config.dbconfig import pg_config
 import psycopg2
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 # create table users(
 #     user_id serial primary key,
@@ -18,7 +17,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class UsersDAO:
     def __init__(self):
-
         connection_url = "dbname=%s user=%s password=%s port=%s host=%s" % (pg_config['dbname'], pg_config['user'],
                                                                             pg_config['password'], pg_config['dbport'], pg_config['dbhost'])
         print("conection url:  ", connection_url)
@@ -33,7 +31,6 @@ class UsersDAO:
         if email_row:
             return None
 
-
         # query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
         #         "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
         #         "select user_id from new_user returning *;"
@@ -42,7 +39,8 @@ class UsersDAO:
                 "select user_id from new_user;" \
                 "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
 
-        cursor.execute(query, (first_name, last_name, email, password, None, None, None, user_type, email))
+        cursor.execute(query, (first_name, last_name, email,
+                               password, None, None, None, user_type, email))
         user = cursor.fetchone()
         print(user)
         self.conn.commit()
@@ -50,11 +48,16 @@ class UsersDAO:
 
     def authenticate_user(self, email, password):
         cursor = self.conn.cursor()
-        query = "select password from users where email=%s;"
-        cursor.execute(query, (email,))
-        pw_hash = cursor.fetchone()[0]
+        query = "select * from users where email=%s;" \
+                "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
+        cursor.execute(query, (email, email,))
+        user = cursor.fetchone()
+        print('us3r', user)
+        if user is None:
+            return None, None
+        pw_hash = user[4]
         self.conn.commit()
-        return check_password_hash(pw_hash, password)
+        return check_password_hash(pw_hash, password), user
 
     def get_all_users(self):
         cursor = self.conn.cursor()
@@ -90,7 +93,6 @@ class UsersDAO:
         user = cursor.fetchone()
         self.conn.commit()
         return user
-
 
     def get_user_id_by_email(self, email):
         cursor = self.conn.cursor()
@@ -128,9 +130,19 @@ class UsersDAO:
 
     def update_user_by_id(self, first_name, last_name, email, password, user_id):
         cursor = self.conn.cursor()
-        query = "update users set first_name = %s, last_name = %s, password = %s, email = %s where user_id = %s returning user_id;"
+        query = "update users set first_name = %s, last_name = %s, password = %s, email = %s " \
+                "where user_id = %s returning user_id;"
         cursor.execute(query, (first_name, last_name,
                                password, email, user_id,))
         result = cursor.fetchone()[0]
         self.conn.commit()
+        return result
+
+    def get_tutors_by_subject(self, subject_id):
+        cursor = self.conn.cursor()
+        query = "select * from subject natural inner join instructs where subject_id=%s;"
+        cursor.execute(query, (subject_id,))
+        result = []
+        for row in cursor:
+            result.append(row)
         return result
