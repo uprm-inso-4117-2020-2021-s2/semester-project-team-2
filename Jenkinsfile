@@ -14,9 +14,10 @@ pipeline {
                 script{
                     try{
                        sh """
-                       cd api
                        pipenv install
+                       cd sample_test_environment
                        pipenv run python3 -m pytest tests.py
+                       pipenv run behave
                        """
                     } catch(e){
                         error("Tests Failed: ${e}")
