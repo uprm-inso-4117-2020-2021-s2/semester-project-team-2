@@ -1,26 +1,34 @@
-import React, { Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import './Signup.css'
-import Navlink from '../../../components/Navbar/Navlink'
-import { Card, Form, Button } from 'react-bootstrap'
+// import Navlink from '../../../components/Navbar/Navlink'
+import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
 import { useRouteMatch, useHistory } from "react-router-dom"
 import AddSubject from '../../tutor/AddSubject/AddSubject'
 import { urlSlug, randomStr } from '../../../util/Util'
-import { tutorViews } from '../../../util/ContentViews'
+// import { tutorViews } from '../../../util/ContentViews'
 
 function Signup() {
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('')
+
+  /**************** HARDCODED FOR TESTING PURPOSES ****************/
   const [firstName, setFirstName] = useState('Antonny');
   const [lastName, setLastName] = useState('Pagan');
+  // const [email, setEmail] = useState('kevin.ramirez3@upr.edu');
   const [email, setEmail] = useState(randomStr() + '@yahoo.com');
-  const [password, setPassword] = useState('ezrum!2');
+  const [password, setPassword] = useState('ezrum!1');
   const [confirmPassword, setConfirmPassword] = useState('ezrum!2')
-  const { tutorState, authState, authDispatch } = useStateValue();
+  const [errorText, setErrorText] = useState('')
+  const { tutorState, tutorDispatch, authState, authDispatch } = useStateValue();
+  /****************************************************************/
 
-  console.log('randomStr', randomStr())
-  console.log('----tutorState', tutorState)
+
+  // console.log('randomStr', randomStr())
+  // console.log('----tutorState', tutorState)
 
   let { url } = useRouteMatch();
   const history = useHistory();
@@ -52,9 +60,6 @@ function Signup() {
 
   const tutorContinue = (e) => {
     e.preventDefault();
-    // setEmail('kevin.ramirez3@upr.edu');
-    // setPassword('Bestlife!8');
-    // setConfirmPassword('Bestlife!8');
     // console.log('-', email, password, confirmPassword)
     const user = {
       first_name: firstName,
@@ -63,6 +68,7 @@ function Signup() {
       password: password,
       user_type: 'tutor'
     }
+
     console.log('tutorContinue', user)
     authDispatch({
       type: 'SET_USER',
@@ -75,23 +81,52 @@ function Signup() {
     history.goBack()
   }
 
-  const tutoreeSignup = (e) => {
+  const tutoreeSignup = async (e) => {
     e.preventDefault();
-    console.log('tutoreeSignup')
+    if (password !== confirmPassword) {
+      setErrorText('Passwords does not match')
+      console.log('passwords don\'t match')
+    }
+    const authData = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+      user_type: 'tutoree'
+    };
+    await fetch(`http://localhost:5000/api/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(authData)
+    })
+      .then(res => res.json())
+      .then(user => {
+        console.log('posted user', user)
+        authDispatch({
+          type: 'SET_USER',
+          ...user
+        });
+        console.log('ahhhh push it');
+        history.push('/tutoree/find-tutor');
+      })
+      .catch(err => {
+        setErrorText('Email already exists')
+        console.log('errorText', errorText)
+        console.log('err', err)
+      });
   }
 
-  const handleSignup = async () => {
+  const handleSignup = async (subjectObj) => {
+    if (password !== confirmPassword) {
+      setErrorText('Passwords does not match')
+      console.log('passwords don\'t match')
+    }
     const authData = {
       first_name: firstName,
       last_name: lastName,
       email: email,
       password: password,
       user_type: 'tutor'
-      // first_name: 'Kevin',
-      // last_name: 'Ramirez',
-      // email: randomStr() + '@yahoo.com',
-      // password: 'postfinallyworked',
-      // user_type: 'tutor'
     };
 
     // const options = {
@@ -102,7 +137,6 @@ function Signup() {
     // // const res = await useFetch('/users', options, undefined, true, undefined);
     // // console.log(res)
 
-
     await fetch(`http://localhost:5000/api/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -110,60 +144,105 @@ function Signup() {
     })
       .then(res => res.json())
       .then(user => {
-        console.log('user', user)
+        console.log('posted user', user)
         authDispatch({
           type: 'SET_USER_ID',
           user_id: user.user_id,
           tutor_id: user.tutor_id,
         })
-        console.log('authState', authState)
+        if (subjectObj) {
+          console.log('subjectObj', subjectObj)
+          tutorDispatch({
+            type: 'ADD_SUBJECT',
+            subject: subjectObj,
+            tutor_id: null
+          })
+        }
+        history.push('/tutor/subjects')
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setErrorText('Email already exists')
+        console.log('errorText', errorText)
+        console.log('err', err)
+      });
   }
 
-  // const [resource, setResource] = useState(initialResource)
+
 
   const handleTutor = () => {
     console.log('authState', authState)
     console.log('tutorState', tutorState)
 
-    if (authState.email && tutorState.subjects?.length > 0) {
-      console.log('Warning: Cannot update during an existing state transition ...')
-      history.push('/tutor/subjects')
-      // console.log('=-=-=--', authState.user_id)
-      // return (
-      //   <Suspense fallback={<div>LOADING ...</div>}>
-      //     {/* {redirectTutor(resource)} */}
-      //     <Subjectss resource={resource} />
-      //   </Suspense>
-      // )
-      // history.push(`/tutor/subjects/${}`)
-    }
-    else if (authState.email) {
+    // if (authState.email && tutorState.subjects?.length > 0) {
+    //   console.log('Warning: Cannot update during an existing state transition ...')
+    //   history.push('/tutor/subjects')
+    //   // history.push(`/tutor/subjects/${}`)
+    // }
+    // else 
+
+    if (authState.email) {
       console.log('AddSubject')
       return (
-        <AddSubject handleSignup={handleSignup} />
+        <AddSubject handleSignup={handleSignup} errorText={errorText} AlertDismissible={AlertDismissible} />
       )
     } else {
-      console.log('else')
       return cardComponent()
     }
   }
 
   const handleTutoree = () => {
-    if (authState.user) {
+    console.log(authState)
+    if (authState.tutoree_id) {
       history.push('/tutoree/find-tutor')
+    }
+    else {
+      console.log('else')
+      return cardComponent()
     }
   }
 
+  const AlertDismissible = () => {
+    const [show, setShow] = useState(true);
+    console.log('AlertDismissible', errorText)
+
+    const close = () => {
+      setShow(false)
+    }
+
+    if (show) {
+      if (errorText.includes('Password')) {
+        console.log(errorText);
+        return (
+          // { errorText }
+          <Alert Alert variant="danger" onClose={close()} dismissible >
+            { errorText}
+          </Alert >
+        )
+      }
+      if (errorText.includes('Email')) {
+        return (
+          // { errorText }
+
+          <Alert variant="danger" onClose={close()} dismissible>
+            {errorText}
+          </Alert>
+        )
+      }
+    }
+    return null;
+  }
+
   const cardComponent = () => {
+    console.log('errorText', errorText)
     return (
       <Card className='p-4'>
-        <h3>
+        <h3 className='text-center'>
           {urlSlug(url) === 'tutor' ? 'Ready to Become a Tutor' : 'Ready to Learn From Experts'}
         </h3>
         <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
         <Form>
+          <AlertDismissible />
+
           <Form.Group
             controlId='firstName'
             onChange={handleFirstNameChange}
@@ -215,7 +294,7 @@ function Signup() {
                 <div className='w-100'>
                   <Button variant='primary' type='submit' className='w-100' onClick={tutoreeSignup}>
                     Sign Up
-                    </Button>
+                  </Button>
                 </div>
               </div>
           }

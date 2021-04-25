@@ -34,28 +34,17 @@ class BaseSubject:
         user_list = dao.get_all_subjects()
         result_list = []
         for row in user_list:
-            obj = self.build_subject_map_dict(row)
+            obj = {'subject_id': row[0], 'subject_name': row[1]}
             result_list.append(obj)
         return jsonify(result_list), 200
-
-    # def create_user(self, first_name, last_name, email, password, user_type):
-    #     dao = UsersDAO()
-    #     user = dao.create_user(first_name, last_name, email, password, user_type)
-    #     if user:
-    #         return self.build_user_map_dict(user), 200
-    #     else:
-    #         return 'email already exists', 409
 
     def create_tutor_subject(self, subject_name, price, pricing_rate, description, tutor_id):
         dao = SubjectDAO()
         subject = dao.create_tutor_subject(subject_name, price, pricing_rate, description, tutor_id)
         # message = {}
         if subject:
-            # return jsonify(self.build_subject_map_dict(subject))
             return self.build_subject_map_dict(subject)
-
-            # message['message'] = 'subject successfully created with id = %s' % subject_id
-        # return jsonify(message), 200
+        # return jsonify(message), 204
 
     def get_tutor_subjects(self, tutor_id):
         dao = SubjectDAO()

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from controller.users import BaseUsers
 from controller.subject import BaseSubject
+from controller.schedule import BaseSchedule
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash
 
@@ -85,6 +86,31 @@ def handle_subject(tutor_id):
         return BaseSubject().create_tutor_subject(subject_name, price, pricing_rate, description, tutor_id)
     else:
         return jsonify("Method Not Allowed"), 405
+
+@app.route('/api/tutors/subject/<int:subject_id>', methods=['GET'])
+def handle_subject_tutors(subject_id):
+    if request.method == 'GET':
+        return BaseUsers().get_tutors_by_subject(subject_id)
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+# @app.route('/api/tutor/schedule/<int:tutor_id>', methods=['GET', 'POST'])
+@app.route('/api/tutor/schedule', methods=['GET', 'POST'])
+def handle_schedule():
+    if request.method == 'POST':
+        schedule = request.get_json()
+        print(schedule)
+        date = schedule['date']
+        tutor_accepted = schedule['tutor_accepted']
+        tutoree_accepted = schedule['tutoree_accepted']
+        subject_name = schedule['subject_name']
+        tutor_id = schedule['tutor_id']
+        tutoree_id = schedule['tutoree_id']
+        return BaseSchedule().create_schedule(date, tutor_accepted,
+                                              tutoree_accepted, subject_name, tutor_id, tutoree_id)
+    else:
+        return jsonify("Method Not Allowed"), 405
+
 
 # FOR TESTING PURPOSES
 @app.route('/api/users/<string:email>', methods=['GET'])

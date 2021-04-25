@@ -1,20 +1,20 @@
-import React, { useState, useEffect, } from 'react'
+import React, { useState } from 'react'
 import './AddSubject.css'
-import Navlink from '../../../components/Navbar/Navlink'
+// import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 
-function AddSubject({ handleSignup }) {
+function AddSubject({ handleSignup, errorText, AlertDismissible }) {
   // const [subject, setSubject] = useState('');
   // const [price, setPrice] = useState('');
   // const [description, setDescription] = useState('');
   const [subject, setSubject] = useState('Calculo 1');
   const [price, setPrice] = useState(20);
   const [description, setDescription] = useState('DESCRIPTION');
-  const { authState, authDispatch, tutorState, tutorDispatch } = useStateValue();
-  const history = useHistory()
+  const { authDispatch, tutorState } = useStateValue();
+  console.log(errorText)
 
   const handleSubjectChange = e => {
     setSubject(e.target.value);
@@ -42,18 +42,9 @@ function AddSubject({ handleSignup }) {
       price: price,
       description: description
     }
-    tutorDispatch({
-      type: 'ADD_SUBJECT',
-      subject: subjectObj,
-      tutor_id: null
-    })
 
-
-    if (handleSignup) {
-      handleSignup()
-      if (true) //apply condition for when signup submission - email already exists
-        history.push('/tutor/subjects')
-    }
+    if (handleSignup)
+      handleSignup(subjectObj)
   }
 
 
@@ -64,6 +55,7 @@ function AddSubject({ handleSignup }) {
           <h4>Add Subject of Expertise</h4>
           <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
           <Form>
+            <AlertDismissible />
             <Form.Group
               controlId='formBasicEmail'
               onChange={handleSubjectChange}

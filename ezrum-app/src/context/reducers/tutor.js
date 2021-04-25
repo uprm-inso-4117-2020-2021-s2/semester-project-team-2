@@ -1,20 +1,21 @@
-import { Next } from "react-bootstrap/esm/PageItem"
-
 export const actionTypes = {
   ADD_SUBJECT: "ADD_SUBJECT",
   REMOVE_SUBJECT: "REMOVE_SUBJECT",
 }
 
 const tutor = (state, action) => {
-  console.log('state, action')
-  console.log(state, action)
+  console.log('-state', state)
+  console.log('-action', action)
+  if (!state.subjects)
+    state['subjects'] = []
+
   switch (action.type) {
     case actionTypes.ADD_SUBJECT:
       console.log('[...state.subjects]', [...state.subjects])
-      console.log(action.tutor)
       console.log({
         subjects: [...state.subjects, action.subject],
       })
+
       return {
         subjects: [...state.subjects, action.subject]
       }

@@ -6,7 +6,7 @@ export const tutorViews = {
 }
 
 export const tutoreeViews = {
-  subjects: 'find-tutor',
+  findTutor: 'find-tutor',
   profile: 'profile',
   schedule: 'schedule'
 }

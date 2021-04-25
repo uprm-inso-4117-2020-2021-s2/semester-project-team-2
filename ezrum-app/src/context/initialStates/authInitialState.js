@@ -17,8 +17,8 @@
  *  TUTOREE should also contain at least the following:
  *  - subject
  */
-export default {
-  // user: null,
+
+let user = {
   user_id: null,
   first_name: null,
   last_name: null,
@@ -26,3 +26,5 @@ export default {
   password: null,
   user_type: null
 }
+
+export default user
