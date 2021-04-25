@@ -1,5 +1,7 @@
 import React from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import './TutoreeView.css'
+import { useRouteMatch, useHistory } from 'react-router-dom'
+import { useStateValue } from '../../context/Provider'
 import { tutoreeViews } from '../../util/ContentViews'
 import { urlSlug } from '../../util/Util'
 import FindTutor from '../../pages/tutoree/FindTutor/FindTutor'
@@ -8,6 +10,10 @@ import Schedule from '../../pages/shared/Schedule/Schedule'
 
 function TutoreeView() {
   let { url } = useRouteMatch();
+  const { authState } = useStateValue();
+  const history = useHistory();
+
+  console.log('TutoreeView')
 
   /** returns the component to be displayed.
     * @param view the name of the component to be displayed
@@ -23,9 +29,19 @@ function TutoreeView() {
     }
   }
 
+  const redirect = () => {
+    history.push('/')
+  }
+
   return (
-    <div>
-      {handleView(urlSlug(url))}
+    <div className='tutoreeView'>
+      {
+        authState.email
+          ?
+          handleView(urlSlug(url))
+          :
+          redirect()
+      }
     </div>
   )
 }

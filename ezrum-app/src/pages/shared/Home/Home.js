@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import EzrumBackgroundImg from '../../../assets/ezrum_hero_background.jpeg'
-import { Button, Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Navlink from '../../../components/Navbar/Navlink'
 import FlexibilityIcon from '../../../assets/Flexibility.png';
 import EducationIcon from '../../../assets/Virtuality.png';

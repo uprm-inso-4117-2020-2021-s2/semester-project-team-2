@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/Navbar'
 import TutorView from './pages/tutor/TutorView'
 import TutoreeView from './pages/tutoree/TutoreeView'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+// import { ErrorBoundary } from './ErrorBoundary'
 
 /**
  * 
@@ -17,6 +18,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 function App() {
   return (
     <div className='app'>
+      {/* <ErrorBoundary> */}
       <Router>
         <Navbar />
         <Switch>
@@ -55,6 +57,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      {/* </ErrorBoundary> */}
     </div>
   );
 }

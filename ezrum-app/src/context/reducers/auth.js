@@ -1,7 +1,6 @@
 export const actionTypes = {
   SET_USER: "SET_USER",
   SET_USER_ID: "SET_USER_ID",
-
   REMOVE_USER: "REMOVE_USER",
 }
 
@@ -10,10 +9,17 @@ const auth = (state, action) => {
   console.log('action', action)
   switch (action.type) {
     case actionTypes.SET_USER:
-      return {
+      let obj = {
         ...state,
         ...action
-      };
+      }
+
+      if (action.user_type === 'tutoree') {
+        obj['tutoree_id'] = obj['tutor_id']
+        delete obj['tutor_id']
+      }
+      console.log('obj', obj)
+      return obj;
     case actionTypes.SET_USER_ID:
 
       return {

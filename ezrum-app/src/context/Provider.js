@@ -2,7 +2,8 @@ import React, { createContext, useContext, useReducer } from 'react'
 import auth from './reducers/auth';
 import tutor from './reducers/tutor';
 import authInitialState from './initialStates/authInitialState';
-import tutorInitialState from './initialStates/tutorInitialState';
+import tutorInitialState from './initialStates/tutoreeInitialState';
+// import tutoreeInitialState from './initialStates/tutoreeInitialState';
 
 export const GlobalContext = createContext();
 
@@ -13,6 +14,7 @@ export const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(auth, authInitialState)
   const [tutorState, tutorDispatch] = useReducer(tutor, tutorInitialState)
+  // const [tutoreeState, tutoreeDispatch] = useReducer(tutoree, tutoreeInitialState)
 
   return (
     <GlobalContext.Provider value={{
