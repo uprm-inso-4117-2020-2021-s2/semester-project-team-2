@@ -15,7 +15,7 @@ CORS(app)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return 'Welcome to the ezrum backend!'
 
 @app.route('/api/users', methods=['POST', 'GET', 'DELETE'])
 def handle_users():
