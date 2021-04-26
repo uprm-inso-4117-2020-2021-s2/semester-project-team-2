@@ -13,6 +13,10 @@ CORS(app)
 #     response.headers.add("Access-Control-Allow-Origin", "*")
 #     return response
 
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
 @app.route('/api/users', methods=['POST', 'GET', 'DELETE'])
 def handle_users():
     if request.method == 'GET':
