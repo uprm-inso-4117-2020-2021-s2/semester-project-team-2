@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import './AddSubject.css'
-import Navlink from '../../../components/Navbar/Navlink'
+// import Navlink from '../../../components/Navbar/Navlink'
 import { Card, Form, Button } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
-function AddSubject() {
+
+function AddSubject({ handleSignup, errorText, AlertDismissible }) {
   // const [subject, setSubject] = useState('');
   // const [price, setPrice] = useState('');
   // const [description, setDescription] = useState('');
   const [subject, setSubject] = useState('Calculo 1');
-  const [price, setPrice] = useState(20.00);
+  const [price, setPrice] = useState(20);
   const [description, setDescription] = useState('DESCRIPTION');
-  const { authDispatch, tutorState, tutorDispatch } = useStateValue();
-  const history = useHistory()
-  console.log('AddSubject tutorState', tutorState)
+  const { authDispatch, tutorState } = useStateValue();
+  console.log(errorText)
 
   const handleSubjectChange = e => {
     setSubject(e.target.value);
@@ -28,25 +28,23 @@ function AddSubject() {
     setDescription(e.target.value);
   };
 
-  const onCancel = (e) => {
+  const onCancel = e => {
     e.preventDefault()
     authDispatch({ type: 'REMOVE_USER' })
-    history.goBack()
   }
 
-  const onSignup = (e) => {
+
+  const onSignup = e => addSubject(e)
+  const addSubject = e => {
     e.preventDefault();
-    const subjects = {
+    const subjectObj = {
       subject: subject,
       price: price,
       description: description
     }
-    // console.log(subjects.subject, subjects.price, subjects.description)
-    tutorDispatch({
-      type: 'ADD_SUBJECT',
-      subjects: subjects
-    })
-    history.push('/tutor/subjects')
+
+    if (handleSignup)
+      handleSignup(subjectObj)
   }
 
 
@@ -57,6 +55,7 @@ function AddSubject() {
           <h4>Add Subject of Expertise</h4>
           <hr className='w-50' style={{ margin: '10px auto 20px auto' }} />
           <Form>
+            <AlertDismissible />
             <Form.Group
               controlId='formBasicEmail'
               onChange={handleSubjectChange}
@@ -75,18 +74,31 @@ function AddSubject() {
             >
               <Form.Control as="textarea" rows={3} placeholder='Description' />
             </Form.Group>
-            <div className='d-flex justify-content-center align-content-center'>
-              <div className='w-100 mr-2'>
-                <Button variant='light' type='submit' className='w-100' onClick={onCancel}>
-                  <span className='green'>Cancel</span>
+            {
+              !tutorState.subjects
+                ?
+                <div className='d-flex justify-content-center align-content-center'>
+                  <div className='w-100 mr-2'>
+                    <Button variant='light' type='submit' className='w-100' onClick={onCancel}>
+                      <span className='green'>Cancel</span>
+                    </Button>
+                  </div>
+                  <div className='w-100'>
+                    <Button variant='primary' type='submit' className='w-100' onClick={onSignup}>
+                      Sign Up
+                    </Button>
+                  </div>
+                </div>
+                :
+                <Button
+                  variant='primary'
+                  type='submit'
+                  className='w-100'
+                  onClick={addSubject}
+                >
+                  <span className='h5'>Add Subject</span>
                 </Button>
-              </div>
-              <div className='w-100'>
-                <Button variant='primary' type='submit' className='w-100' onClick={onSignup}>
-                  Sign Up
-                </Button>
-              </div>
-            </div>
+            }
           </Form>
         </Card>
       </div>

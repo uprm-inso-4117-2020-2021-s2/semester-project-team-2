@@ -1,15 +1,20 @@
 import React from 'react'
-import { useRouteMatch } from 'react-router-dom'
-import { tutorViews } from '../../util/ContentViews'
-import { urlSlug } from '../../util/Util'
+import './TutorView.css'
 import Requests from '../../pages/tutor/Requests/Requests'
 import Subjects from './Subjects/Subjects'
 import Profile from '../../pages/shared/Profile/Profile'
 import Schedule from '../../pages/shared/Schedule/Schedule'
+import { useStateValue } from '../../context/Provider'
+import { tutorViews } from '../../util/ContentViews'
+import { urlSlug } from '../../util/Util'
+import { useRouteMatch, useHistory } from "react-router-dom"
 
 /** Handles the components to be displayed by recognizing route changes. */
 function TutorView() {
   let { url } = useRouteMatch();
+  const history = useHistory();
+  const { authState } = useStateValue();
+
 
   /** returns the component to be displayed.
     * @param view the name of the component to be displayed
@@ -27,9 +32,19 @@ function TutorView() {
     }
   }
 
+  const redirect = () => {
+    history.push('/')
+  }
+
   return (
-    <div>
-      {handleView(urlSlug(url))}
+    <div className='tutorView'>
+      {
+        authState.email
+          ?
+          handleView(urlSlug(url))
+          :
+          redirect()
+      }
     </div>
   )
 }

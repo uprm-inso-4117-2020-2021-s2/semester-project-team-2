@@ -5,13 +5,10 @@ import Home from './pages/shared/Home/Home'
 import Signup from './pages/shared/Signup/Signup'
 import Signin from './pages/shared/Signin/Signin'
 import Navbar from './components/Navbar/Navbar'
-import AddSubject from './pages/tutor/AddSubject/AddSubject'
 import TutorView from './pages/tutor/TutorView'
 import TutoreeView from './pages/tutoree/TutoreeView'
-import { useStateValue } from './context/Provider'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { GlobalProvider } from './context/Provider'
-
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+// import { ErrorBoundary } from './ErrorBoundary'
 
 /**
  * 
@@ -21,6 +18,7 @@ import { GlobalProvider } from './context/Provider'
 function App() {
   return (
     <div className='app'>
+      {/* <ErrorBoundary> */}
       <Router>
         <Navbar />
         <Switch>
@@ -29,13 +27,8 @@ function App() {
           </Route>
 
           {/* Sign up */}
-          <Route exact path={`/signup`}>
+          <Route exact path={`/signup/:user_type`}>
             <Signup />
-          </Route>
-
-          {/* Sign up - add subject */}
-          <Route path='/signup/add-subject'>
-            <AddSubject />
           </Route>
 
           {/* Sign in */}
@@ -53,11 +46,18 @@ function App() {
             <TutoreeView />
           </Route>
 
+          {/* Redirect */}
+          <Route exact path={`/signup`}>
+            <Redirect to={'signup/tutor'} />
+          </Route>
+
+          {/* Page Not Found */}
           <Route>
             <h1>Page Not Found</h1>
           </Route>
         </Switch>
       </Router>
+      {/* </ErrorBoundary> */}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import EzrumBackgroundImg from '../../../assets/ezrum_hero_background.jpeg'
-import { Button, Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Navlink from '../../../components/Navbar/Navlink'
 import FlexibilityIcon from '../../../assets/Flexibility.png';
 import EducationIcon from '../../../assets/Virtuality.png';
@@ -44,10 +44,10 @@ function Home() {
           </div>
         </div>
         <div className='home__right'>
-          <form className='p-4'>
+          <form className='home__form p-4'>
             <h2 className='getStartedTitle'>
               Get Started!
-              </h2>
+            </h2>
             <hr />
             <div>
               <p className='formBody'>
@@ -65,7 +65,7 @@ function Home() {
                 </Navlink>
               </div>
               <div className='becomeTutorArea'>
-                <Navlink path='/signup'>
+                <Navlink path='/signup/tutor'>
                   <Button className='becomeTutorButt w-100' variant='primary'>
                     Become a Tutor
                   </Button>
