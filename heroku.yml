@@ -1,5 +1,0 @@
-build:
-  docker:
-    web: Procfile
-run:
-  web: bundle exec dbconfig -C config/dbconfig.py
