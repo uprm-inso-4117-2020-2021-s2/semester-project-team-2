@@ -34,10 +34,17 @@ class UsersDAO:
         # query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
         #         "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
         #         "select user_id from new_user returning *;"
-        query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
-                "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
-                "select user_id from new_user;" \
-                "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
+        query = ""
+        if user_type == "tutor":
+            query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
+                    "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutor (user_id) " \
+                    "select user_id from new_user;" \
+                    "select users.*, tutor.tutor_id from users natural inner join tutor where email=%s;"
+        else:
+            query = "with new_user as (insert into users(first_name, last_name, email, password, college, phone_number, about_me, user_type)" \
+                    "values (%s, %s, %s, %s, %s, %s, %s, %s) returning *) insert into tutoree (user_id) " \
+                    "select user_id from new_user;" \
+                    "select users.*, tutoree.tutoree_id from users natural inner join tutoree where email=%s;"
 
         cursor.execute(query, (first_name, last_name, email,
                                password, None, None, None, user_type, email))
