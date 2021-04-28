@@ -14,7 +14,7 @@ from datetime import datetime
 
 
 def to_date(date_str):
-    return datetime.strptime(date_str, "%Y-%m-%d").date()
+    return datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S").date()
 
 
 class ScheduleDAO:
@@ -29,30 +29,27 @@ class ScheduleDAO:
 
     def create_schedule(self, date, tutor_accepted, tutoree_accepted, subject_name, tutor_id, tutoree_id):
         cursor = self.conn.cursor()
-        print(date, tutor_accepted, tutoree_accepted, subject_name, tutor_id, tutoree_id)
         query = "select subject_id from subject where subject_name=%s;"
         cursor.execute(query, (subject_name,))
         subject_id = cursor.fetchone()[0]
-        # return subject_id
 
         query = "insert into schedule (date, tutor_accepted, tutoree_accepted, subject_id, tutor_id, tutoree_id)" \
                 "values (%s, %s, %s, %s, %s, %s) returning *;"
-        # cursor.execute(query, (date, tutor_accepted, tutoree_accepted, subject_id, tutor_id, tutoree_id,))
-        cursor.execute(query, (datetime.now(), tutor_accepted, tutoree_accepted, subject_id, tutor_id, tutoree_id,))
+        cursor.execute(query, (date, tutor_accepted, tutoree_accepted, subject_id, tutor_id, tutoree_id,))
         schedule = cursor.fetchone()
-        print(to_date(date))
-        print('schedule', schedule)
-        # self.conn.commit()
 
         query = "insert into tutor_schedule(schedule_id, tutor_id) values (%s, %s) returning *;"
         cursor.execute(query, (schedule[0], tutor_id,))
-        tutor_schedule = cursor.fetchone()
-        print('tutor_schedule', tutor_schedule)
 
         query = "insert into tutoree_schedule(schedule_id, tutoree_id) values (%s, %s) returning *;"
         cursor.execute(query, (schedule[0], tutoree_id,))
-        tutoree_schedule = cursor.fetchone()
-        print('tutoree_schedule', tutoree_schedule)
+
+        query = "select schedule.schedule_id, schedule.date, schedule.tutor_accepted, schedule.tutoree_accepted, " \
+                "schedule.subject_id, schedule.tutor_id, schedule.tutoree_id, instructs.description, " \
+                "instructs.price, instructs.pricing_rate from instructs natural inner join schedule " \
+                "natural inner join tutor where instructs.subject_id=%s and tutor.tutor_id=%s;"
+        cursor.execute(query, (schedule[4], tutor_id,))
+        schedule_result = cursor.fetchone()
 
         self.conn.commit()
-        return schedule
+        return schedule_result
