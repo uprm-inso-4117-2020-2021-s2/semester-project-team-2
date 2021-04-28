@@ -50,23 +50,17 @@ class SubjectDAO:
         id_query = "select subject_id from subject where subject_name=%s;"
         cursor.execute(id_query, (subject_name,))
         subject_id = cursor.fetchone()[0]
-        print(subject_id)
 
         # creating user, subject relationship
         query = "insert into instructs(tutor_id, price, pricing_rate, description, subject_id)" \
                 "values(%s, %s, %s, %s, %s) returning tutor_id;" \
                 "select * from subject natural inner join instructs where tutor_id=%s;"
-        print(tutor_id)
         cursor.execute(query, (tutor_id, price, pricing_rate,
                                description, subject_id, tutor_id,))
         subject = cursor.fetchone()
         print('subject', subject)
         self.conn.commit()
         return subject
-        # tutor_id = cursor.fetchone()[0]
-        # print('tutor_id', tutor_id)
-        # self.conn.commit()
-        # return tutor_id
 
     def get_tutor_subjects(self, tutor_id):
         cursor = self.conn.cursor()
