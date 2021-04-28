@@ -6,7 +6,7 @@ import Navlink from '../../../components/Navbar/Navlink'
 import FlexibilityIcon from '../../../assets/Flexibility.png';
 import EducationIcon from '../../../assets/Virtuality.png';
 import SimplicityIcon from '../../../assets/Simplicity.png';
-import { navbarHeight } from '../../../util/Util'
+import { navbarHeight } from '../../../util/util'
 
 const boxInfo = [
   {

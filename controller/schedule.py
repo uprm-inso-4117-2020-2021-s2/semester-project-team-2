@@ -27,7 +27,10 @@ def build_schedule_map_dict(row):
         'tutoree_accepted': row[3],
         'subject_id': row[4],
         'tutor_id': row[5],
-        'tutoree_id': row[6]
+        'tutoree_id': row[6],
+        "description": row[7],
+        "price": str(row[8]),
+        "pricing_rate": row[9]
     }
     return result
 
@@ -36,10 +39,9 @@ class BaseSchedule:
 
     def create_schedule(self, date, tutor_accepted, tutoree_accepted, subject_name, tutor_id, tutoree_id):
         dao = ScheduleDAO()
-        print(date, tutor_accepted, tutoree_accepted, subject_name, tutor_id, tutoree_id)
         schedule = dao.create_schedule(date, tutor_accepted, tutoree_accepted,
                                        subject_name, tutor_id, tutoree_id)
-        print('build schedule', build_schedule_map_dict(schedule))
+        print('schedule', schedule)
         if schedule:
             return build_schedule_map_dict(schedule), 201
         else:

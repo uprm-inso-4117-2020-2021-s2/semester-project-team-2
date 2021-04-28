@@ -9,13 +9,10 @@ app = Flask(__name__)
 CORS(app)
 
 
-# def build_actual_response(response):
-#     response.headers.add("Access-Control-Allow-Origin", "*")
-#     return response
-
 @app.route('/')
 def hello_world():
     return 'Welcome to the ezrum backend!'
+
 
 @app.route('/api/users', methods=['POST', 'GET', 'DELETE'])
 def handle_users():
@@ -32,6 +29,7 @@ def handle_users():
         return BaseUsers().create_user(first_name, last_name, email, pw_hash, user_type)
     else:
         return jsonify("Method Not Allowed"), 405
+
 
 @app.route('/api/users/<int:user_id>', methods=['GET', 'PUT', 'DELETE'])
 def handle_user(user_id):
@@ -53,12 +51,14 @@ def handle_user(user_id):
     else:
         return jsonify("Method Not Allowed"), 405
 
+
 @app.route('/api/tutors', methods=['GET'])
 def handle_tutors():
     if request.method == 'GET':
         return BaseUsers().get_all_tutors()
     else:
         return jsonify("Method Not Allowed"), 405
+
 
 @app.route('/api/auth/login', methods=['POST'])
 def handle_user_authentication():
@@ -70,12 +70,14 @@ def handle_user_authentication():
     else:
         return jsonify("Method Not Allowed"), 405
 
+
 @app.route('/api/subjects', methods=['GET'])
 def handle_subjects():
     if request.method == 'GET':
         return BaseSubject().get_all_subject()
     else:
         return jsonify("Method Not Allowed"), 405
+
 
 @app.route('/api/subjects/<int:tutor_id>', methods=['GET', 'POST'])
 def handle_subject(tutor_id):
@@ -91,6 +93,7 @@ def handle_subject(tutor_id):
     else:
         return jsonify("Method Not Allowed"), 405
 
+
 @app.route('/api/tutors/subject/<int:subject_id>', methods=['GET'])
 def handle_subject_tutors(subject_id):
     if request.method == 'GET':
@@ -98,7 +101,6 @@ def handle_subject_tutors(subject_id):
     else:
         return jsonify("Method Not Allowed"), 405
 
-# @app.route('/api/tutor/schedule/<int:tutor_id>', methods=['GET', 'POST'])
 @app.route('/api/tutor/schedule', methods=['GET', 'POST'])
 def handle_schedule():
     if request.method == 'POST':
@@ -124,6 +126,7 @@ def handle_user_by_email(email):
         return BaseUsers().get_user_id_by_email(email)
     else:
         return jsonify("Method Not Allowed"), 405
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -23,8 +23,9 @@ function Subjects() {
 
   useEffect(() => {
     console.log('tutorView useEffect', authState.tutor_id, authState)
-    if (authState.tutor_id)
-      fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
+    if (authState.tutor_id) {
+
+      setTimeout(() => fetch(`http://localhost:5000/api/subjects/${authState.tutor_id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -33,7 +34,8 @@ function Subjects() {
           console.log('subjects', subjects)
           setSubjects(subjects)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err)), 1000)
+    }
   }, [authState])
 
   // const options = {

@@ -10,7 +10,7 @@ function AddSubject({ handleSignup, errorText, AlertDismissible }) {
   // const [subject, setSubject] = useState('');
   // const [price, setPrice] = useState('');
   // const [description, setDescription] = useState('');
-  const [subject, setSubject] = useState('Calculo 1');
+  const [subject, setSubject] = useState('Calculus 1');
   const [price, setPrice] = useState(20);
   const [description, setDescription] = useState('DESCRIPTION');
   const { authDispatch, tutorState } = useStateValue();
@@ -38,7 +38,8 @@ function AddSubject({ handleSignup, errorText, AlertDismissible }) {
   const addSubject = e => {
     e.preventDefault();
     const subjectObj = {
-      subject: subject,
+      subject_name: subject,
+      pricing_rate: 'hourly',
       price: price,
       description: description
     }

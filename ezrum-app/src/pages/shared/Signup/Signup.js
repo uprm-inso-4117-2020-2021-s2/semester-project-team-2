@@ -5,7 +5,7 @@ import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useStateValue } from '../../../context/Provider'
 import { useRouteMatch, useHistory } from "react-router-dom"
 import AddSubject from '../../tutor/AddSubject/AddSubject'
-import { urlSlug, randomStr } from '../../../util/Util'
+import { urlSlug, randomStr } from '../../../util/util'
 // import { tutorViews } from '../../../util/ContentViews'
 
 function Signup() {
@@ -16,12 +16,12 @@ function Signup() {
   // const [confirmPassword, setConfirmPassword] = useState('')
 
   /**************** HARDCODED FOR TESTING PURPOSES ****************/
-  const [firstName, setFirstName] = useState('Antonny');
-  const [lastName, setLastName] = useState('Pagan');
+  const [firstName, setFirstName] = useState('Kevin');
+  const [lastName, setLastName] = useState('Ramirez');
   // const [email, setEmail] = useState('kevin.ramirez3@upr.edu');
   const [email, setEmail] = useState(randomStr() + '@yahoo.com');
   const [password, setPassword] = useState('ezrum!1');
-  const [confirmPassword, setConfirmPassword] = useState('ezrum!2')
+  const [confirmPassword, setConfirmPassword] = useState('ezrum!1')
   const [errorText, setErrorText] = useState('')
   const { tutorState, tutorDispatch, authState, authDispatch } = useStateValue();
   /****************************************************************/
@@ -155,8 +155,22 @@ function Signup() {
           tutorDispatch({
             type: 'ADD_SUBJECT',
             subject: subjectObj,
-            tutor_id: null
+            // tutor_id: null
           })
+          console.log('user.tutor_id', user.tutor_id)
+          fetch(`http://localhost:5000/api/subjects/${user.tutor_id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(subjectObj)
+          })
+            .then(res => res.json())
+            .then(subject => {
+              console.log('posted subject', subject)
+            })
+            .catch(err => {
+              setErrorText('Email already exists')
+              console.log('err', err)
+            });
         }
         history.push('/tutor/subjects')
       })

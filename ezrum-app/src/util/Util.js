@@ -18,3 +18,8 @@ export const randomStr = () => {
   }
   return result.join('');
 }
+
+export const baseUrl = (endpoint) => {
+  console.log('endpoint', endpoint)
+  return `https://team-ezrum.herokuapp.com${endpoint}`
+}
