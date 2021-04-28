@@ -3,7 +3,7 @@ import './Navbar.css'
 import Navlink from '../../components/Navbar/Navlink'
 import { Navbar, Nav, Button } from 'react-bootstrap'
 import EzrumLogo from '../../assets/ezrum_logo_white.png'
-import { navbarHeight } from '../../util/Util'
+import { navbarHeight } from '../../util/util'
 import { useStateValue } from '../../context/Provider'
 // import { useHistory } from "react-router-dom";
 // import DefaultAvatar from '../../assets/default-avatar.png'

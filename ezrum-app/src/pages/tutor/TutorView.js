@@ -6,7 +6,7 @@ import Profile from '../../pages/shared/Profile/Profile'
 import Schedule from '../../pages/shared/Schedule/Schedule'
 import { useStateValue } from '../../context/Provider'
 import { tutorViews } from '../../util/ContentViews'
-import { urlSlug } from '../../util/Util'
+import { urlSlug } from '../../util/util'
 import { useRouteMatch, useHistory } from "react-router-dom"
 
 /** Handles the components to be displayed by recognizing route changes. */
